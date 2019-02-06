@@ -21,7 +21,7 @@ import { DetailpatientPage } from '../pages/detailpatient/detailpatient';
 import { GeolocationPage } from '../pages/geolocation/geolocation';
 import { ResultPage } from '../pages/result/result';
 
-
+import { IonicStorageModule } from '@ionic/storage';
 
 //database
 import { AngularFireModule } from 'angularfire2';
@@ -68,6 +68,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(config),
     AngularFireDatabaseModule,
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [

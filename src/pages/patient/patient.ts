@@ -21,7 +21,7 @@ export class PatientPage {
  
   constructor(public navCtrl: NavController, private modalCtrl: ModalController) {
   }
- 
+
   openaddpatient(){
     let modal = this.modalCtrl.create('AddpatientPage');
     modal.present();

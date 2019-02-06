@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { DetailpatientPage } from '../detailpatient/detailpatient';
+import { Storage } from '@ionic/storage';
 
 
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
@@ -34,11 +35,15 @@ import 'rxjs/add/operator/map';
 
     isToogle:boolean = false;
 
-  constructor(private af: AngularFireDatabase,
-              public navCtrl: NavController,
-              public navParams: NavParams) {
+  constructor(
+    private af: AngularFireDatabase,
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public storage: Storage)
+    {
                 
-              }
+              
+    }
   ionViewWillEnter() {
     this.showData();
   }
@@ -50,6 +55,7 @@ import 'rxjs/add/operator/map';
     this.itemsRef = this.af.list('/');
     // Use snapshotChanges().map() to store the key
     this.items = this.itemsRef.snapshotChanges().map(changes => {
+      console.log(changes)
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
     });
   }
@@ -113,9 +119,23 @@ update(note: any) {
 
   //แสดงข้อมูลคนไข้
   goToDetailpatient() {
-
     // firstName = firstName;
+    this.storage.set('firstName', this.firstName);
+    this.storage.set('lastName', this.lastName);
+    this.storage.set('dateOfBirth', this.dateOfBirth);
+    this.storage.set('age', this.age);
+    this.storage.set('bloodType', this.bloodType);
+    this.storage.set('medicalProblems', this.medicalProblems);
+    this.storage.set('riskType', this.riskType);
+    this.storage.set('address', this.address);
+    this.storage.set('tel', this.tel);
+    this.storage.set('patient_id', this.patient_id);
+    this.storage.set('identification_number', this.identification_number);
+  //   storage.get('name').then((val) => {
+  //   console.log('Your age is', val);
+  // });
 
+  
     this.navCtrl.push(DetailpatientPage,{
       companyName: 'aaaaaaaaaaa',
       companyWebsite: 'bbbbbbbbbbb'

@@ -9,21 +9,23 @@
   
   </ion-header>
   
-  
-  <ion-content padding>
-       
-        <h6>ชื่อ :</h6>
-        <h6>นามสกุล :</h6>
-        <h6>เพศ :</h6>
-        <h6>เลขประจำตัวคนไข้ :</h6>
-        <h6>เลขประจำตัวประชาชน :</h6>
-        <h6>วัน/เดือน/ปีเกิด :</h6>
-        <h6>อายุ (ปี) :</h6>  
-        <h6>กรุ๊ปเลือด :</h6>
-        <h6>โรคประจำตัว :</h6>
-        <h6>ประเภทความเสี่ยง :</h6>
-        <h6>เบอร์โทรศัพท์ :</h6>
-        <h6>ที่อยู่ :</h6>  
+
+  <ion-content padding>    
+        <ion-item no-padding>ชื่อ : {{first_name}}</ion-item>
+        <ion-item no-padding>นามสกุล : {{last_name}}</ion-item>
+        <!-- *** -->
+        <ion-item no-padding>เพศ : </ion-item> 
+        <!--*** -->
+        <ion-item no-padding>เลขประจำตัวคนไข้ : {{patient_id_}}</ion-item>
+        <ion-item no-padding>เลขประจำตัวประชาชน : {{identification_number_}}</ion-item>
+        <ion-item no-padding>วัน/เดือน/ปีเกิด : {{date_of_birth}}</ion-item>
+        <ion-item no-padding>อายุ (ปี) : {{age_}}</ion-item>  
+        <ion-item no-padding>กรุ๊ปเลือด : {{blood_type}}</ion-item>
+        <ion-item no-padding>โรคประจำตัว : {{medical_problems}}</ion-item>
+        <ion-item no-padding>ประเภทความเสี่ยง : {{risk_type}}</ion-item>
+        <ion-item no-padding>เบอร์โทรศัพท์ : {{tel_number}}</ion-item>
+        <ion-item no-padding>ที่อยู่ : {{address_}}</ion-item>  
+
         <button ion-button type="submit" (click)="navigateLocation()">รับเส้นทาง</button>
 
         <button color="secondary" ion-button type="submit" (click)="goToResult()" >ประวัติการตรวจ</button>
