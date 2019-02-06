@@ -1,0 +1,45 @@
+<ion-header>
+
+    <ion-navbar color="bluebar">
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>ข้อมูลคนไข้</ion-title>
+    </ion-navbar>
+  
+  </ion-header>
+  
+  
+  <ion-content padding>
+       
+        <h6>ชื่อ :</h6>
+        <h6>นามสกุล :</h6>
+        <h6>เพศ :</h6>
+        <h6>เลขประจำตัวคนไข้ :</h6>
+        <h6>เลขประจำตัวประชาชน :</h6>
+        <h6>วัน/เดือน/ปีเกิด :</h6>
+        <h6>อายุ (ปี) :</h6>  
+        <h6>กรุ๊ปเลือด :</h6>
+        <h6>โรคประจำตัว :</h6>
+        <h6>ประเภทความเสี่ยง :</h6>
+        <h6>เบอร์โทรศัพท์ :</h6>
+        <h6>ที่อยู่ :</h6>  
+        <button ion-button type="submit" (click)="navigateLocation()">รับเส้นทาง</button>
+
+        <button color="secondary" ion-button type="submit" (click)="goToResult()" >ประวัติการตรวจ</button>
+
+         
+    
+  </ion-content> 
+
+
+<!-- 
+<ion-content padding>
+
+<table>
+  
+    <td> {{item.name}}</td>
+
+</table>
+  
+</ion-content> -->

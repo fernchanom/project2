@@ -1,0 +1,105 @@
+<ion-header>
+
+  <ion-navbar color="bluebar">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>ประวัติการตรวจ</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only color="royal" (click)="openFormResult()">
+        <ion-icon name="add-circle"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <!-- <form *ngIf="isToogle" novalidate #result="ngForm" (ngSubmit)="save(result.value)">
+    <ion-list>
+
+      <ion-item>
+        <ion-label floating>อาการ</ion-label>
+        <ion-input [(ngModel)]="symptom" type="text" name="symptom" required></ion-input>
+
+      </ion-item>
+
+      <div padding>
+        <button ion-button type="submit" [disabled]="!result.form.valid">เพิ่ม</button>
+        <button ion-button type="button" [disabled]="!result.form.valid" (click)="update(result.value)">แก้ไข</button>
+      </div>
+  
+    </ion-list>
+  </form>
+
+  <ion-list>
+    <ion-item-sliding *ngFor="let item of items | async"
+   (click)="select(item)" >
+    <ion-item>
+    
+    <p>{{item.result.symptom}}</p>
+    </ion-item>
+
+    <ion-item-options side="right">
+    <button ion-button color="danger" (click)="delete(item)">
+    <ion-icon name="trash"></ion-icon>
+    ลบข้อมูล
+    </button>
+    </ion-item-options>
+    </ion-item-sliding>
+    </ion-list> -->
+
+    
+    <ion-item>
+      <ion-label floating>วัน/เดือน/ปีที่ตรวจ</ion-label>
+      <ion-datetime [(ngModel)]="date" type="text" displayFormat="MM/DD/YYYY" name="date" required></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>อาการ</ion-label>
+      <ion-input [(ngModel)]="sick" type="text" name="sick" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>วัน/เดือน/ปีที่ตรวจครั้งถัดไป</ion-label>
+      <ion-datetime [(ngModel)]="next" type="text" displayFormat="MM/DD/YYYY" name="next" required></ion-datetime>
+    </ion-item>
+    
+    <div padding>
+        <button ion-button type="submit" >เพิ่ม</button>
+        <button ion-button type="button" color="secondary" >แก้ไข</button>
+  
+      <!-- <button ion-button type="submit" [disabled]="!result.form.valid">เพิ่ม</button>
+      <button ion-button type="button" [disabled]="!result.form.valid" (click)="update(result.value)">แก้ไข</button> -->
+    </div>
+
+
+
+    <!-- show -->
+
+    <ion-list>
+        <!-- <ion-item-sliding *ngFor="let item of items | async"
+       (click)="select(item)" > -->
+        <ion-item>
+        <h3>วดป</h3>
+        <p>อาการ</p>
+        </ion-item>
+        
+        <ion-item-options side="right">
+        <button ion-button color="danger" (click)="delete(item)">
+        <ion-icon name="trash"></ion-icon>
+        ลบข้อมูล
+        </button>
+        </ion-item-options>
+
+        <!-- </ion-item-sliding> -->
+    </ion-list>
+
+
+
+</ion-content> 
+

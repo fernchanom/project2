@@ -2,9 +2,28 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+//import { Component } from '@angular/core';
 
+
+////////// เพิ่มใน รายการ sidebar
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
+//import { ListPage } from '../pages/list/list';
+//import { AddpatientPage } from '../pages/addpatient/addpatient';
+import { SearchpatientPage } from '../pages/searchpatient/searchpatient';
+import { TypeofpatientPage } from '../pages/typeofpatient/typeofpatient';
+import { TodayPage } from '../pages/today/today';
+import { NextdayPage } from '../pages/nextday/nextday';
+import { SignoutPage } from '../pages/signout/signout';
+import { NotePage } from '../pages/note/note';
+//import { MapPage } from '../pages/map/map';
+import { MappatientPage } from '../pages/mappatient/mappatient';
+import { PatientPage } from '../pages/patient/patient';
+import { GeolocationPage } from '../pages/geolocation/geolocation';
+
+
+
+
+
 
 @Component({
   templateUrl: 'app.html'
@@ -12,17 +31,32 @@ import { ListPage } from '../pages/list/list';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: any = NotePage;
 
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{title: string, component: any, icon: string}>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'List', component: ListPage }
+     // { title: 'หน้าแรก', component: HomePage, icon: 'home'},
+     // { title: 'List', component: ListPage },
+     // { title: 'เพิ่มคนไข้', component: AddpatientPage, icon: 'person-add'},
+      { title: 'คนไข้', component: NotePage, icon: 'man'}, 
+      //{ title: 'คนไข้2', component: PatientPage, icon: 'man'},
+      //{ title: 'ค้นหาคนไข้', component: SearchpatientPage, icon: 'search'},
+      { title: 'ประเภทคนไข้', component: TypeofpatientPage, icon: 'people'},
+      { title: 'ผลการตรวจประจำวัน', component: TodayPage, icon: 'paper'},
+      { title: 'การตรวจครั้งถัดไป', component: NextdayPage, icon: 'clipboard'},
+      
+//      { title: 'แผนที่', component: MapPage, icon: 'navigate'},
+      { title: 'แผนที่', component: MappatientPage, icon: 'navigate'},
+      { title: 'แผนที่2', component: GeolocationPage, icon: 'navigate'},
+      { title: 'ออกจากระบบ', component: SignoutPage, icon: 'log-out'},
+
+
+
     ];
 
   }
