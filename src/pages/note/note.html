@@ -20,10 +20,7 @@
 
 
 <ion-content padding>
-
-
-
-  
+ 
 <ion-searchbar>
 
 </ion-searchbar>
@@ -49,18 +46,18 @@
       <ion-item>
         <tr>เพศ</tr> </ion-item>
         <!-- <ion-input [(ngModel)]="bloodType" type="text" name="bloodType" required></ion-input> -->
-      
-        <ion-list radio-group >
+        <ion-list radio-group [(ngModel)]="sex">
             <ion-item>
               <ion-label>ชาย</ion-label>
-              <ion-radio  value="male" name="sex"checked="true"></ion-radio>
+              <ion-radio  value="male" checked="true"></ion-radio>
             </ion-item>
             <ion-item>
               <ion-label>หญิง</ion-label>
-              <ion-radio value="female" name="sex"></ion-radio>
+              <ion-radio value="female"></ion-radio>
             </ion-item>
         </ion-list>          
       <!-- ***** -->
+      
 
       <ion-item>
         <ion-label floating>เลขประจำตัวคนไข้</ion-label>

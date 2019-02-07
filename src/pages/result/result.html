@@ -53,6 +53,8 @@
     </ion-item-sliding>
     </ion-list> -->
 
+    <form *ngIf="isToogle" novalidate #result="ngForm" >
+    <ion-list>
     
     <ion-item>
       <ion-label floating>วัน/เดือน/ปีที่ตรวจ</ion-label>
@@ -68,6 +70,7 @@
       <ion-label floating>วัน/เดือน/ปีที่ตรวจครั้งถัดไป</ion-label>
       <ion-datetime [(ngModel)]="next" type="text" displayFormat="MM/DD/YYYY" name="next" required></ion-datetime>
     </ion-item>
+
     
     <div padding>
         <button ion-button type="submit" >เพิ่ม</button>
@@ -76,6 +79,9 @@
       <!-- <button ion-button type="submit" [disabled]="!result.form.valid">เพิ่ม</button>
       <button ion-button type="button" [disabled]="!result.form.valid" (click)="update(result.value)">แก้ไข</button> -->
     </div>
+
+  </ion-list>
+  </form>
 
 
 

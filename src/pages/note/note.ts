@@ -23,6 +23,7 @@ import 'rxjs/add/operator/map';
     key:string;
     firstName:string;
     lastName:string;
+    sex:string;
     dateOfBirth:string;
     age:string;
     bloodType:string;
@@ -41,7 +42,7 @@ import 'rxjs/add/operator/map';
     public navParams: NavParams,
     public storage: Storage)
     {
-                
+           
               
     }
   ionViewWillEnter() {
@@ -66,6 +67,7 @@ import 'rxjs/add/operator/map';
     //console.log(item);
     this.firstName = item.note.firstName;
     this.lastName = item.note.lastName;
+    this.sex = item.note.sex;
     this.dateOfBirth = item.note.dateOfBirth;
     this.age = item.note.age;
     this.bloodType = item.note.bloodType;
@@ -117,6 +119,7 @@ update(note: any) {
 }
 
 
+
   //แสดงข้อมูลคนไข้
   goToDetailpatient() {
     // firstName = firstName;
@@ -131,11 +134,13 @@ update(note: any) {
     this.storage.set('tel', this.tel);
     this.storage.set('patient_id', this.patient_id);
     this.storage.set('identification_number', this.identification_number);
+    //radio
+    this.storage.set('sex', this.sex);
   //   storage.get('name').then((val) => {
   //   console.log('Your age is', val);
   // });
 
-  
+
     this.navCtrl.push(DetailpatientPage,{
       companyName: 'aaaaaaaaaaa',
       companyWebsite: 'bbbbbbbbbbb'

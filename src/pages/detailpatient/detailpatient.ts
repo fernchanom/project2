@@ -35,6 +35,7 @@ export class DetailpatientPage {
   tel_number:string;
   patient_id_:string;
   identification_number_:string;
+  sex_:string;
  
   constructor(private af: AngularFireDatabase,public navCtrl: NavController, public navParams: NavParams,
     public geolocation: Geolocation, private launchNavigator:LaunchNavigator, private platform: Platform,
@@ -77,6 +78,9 @@ export class DetailpatientPage {
   })
   this.storage.get('identification_number').then((val) => {
     this.identification_number_ = val
+  })
+  this.storage.get('sex').then((val) => {
+    this.sex_ = val
   });
 
 

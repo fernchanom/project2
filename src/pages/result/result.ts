@@ -13,10 +13,12 @@ import 'rxjs/add/operator/map';
 export class ResultPage {
   itemsRef: AngularFireList<any>;
   items: Observable<any[]>;
-  // key:string;
-  // symptom:string;
+  key:string;
+  date:string;
+  sick:string;
+  next:string;
 
-  // isToogle:boolean = false;
+  isToogle:boolean = false;
 
  constructor(private af: AngularFireDatabase,
               public navCtrl: NavController,
@@ -70,10 +72,10 @@ export class ResultPage {
 //   this.isToogle = false;
 // }
 
-//  //เป็น method ที่มีไว้ซ่อนหรือแสดงฟอร์ม
-//  openForm() {
-//   this.isToogle = !this.isToogle;
-// }
+ //เป็น method ที่มีไว้ซ่อนหรือแสดงฟอร์ม
+ openFormResult() {
+  this.isToogle = !this.isToogle;
+}
 
 
 
