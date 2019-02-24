@@ -20,6 +20,7 @@ import { MappatientPage } from '../pages/mappatient/mappatient';
 import { PatientPage } from '../pages/patient/patient';
 import { GeolocationPage } from '../pages/geolocation/geolocation';
 import { LoginPage } from '../pages/login/login';
+import { DetailcheckupPage } from '../pages/detailcheckup/detailcheckup';
 
 
 
@@ -44,7 +45,7 @@ export class MyApp {
      // { title: 'หน้าแรก', component: HomePage, icon: 'home'},
      // { title: 'List', component: ListPage },
      // { title: 'เพิ่มคนไข้', component: AddpatientPage, icon: 'person-add'},
-      { title: 'เข้าสู่ระบบ', component: LoginPage, icon: 'man'},
+      { title: 'เข้าสู่ระบบ', component: LoginPage, icon: 'log-in'},
       { title: 'คนไข้', component: NotePage, icon: 'man'}, 
       //{ title: 'คนไข้2', component: PatientPage, icon: 'man'},
       //{ title: 'ค้นหาคนไข้', component: SearchpatientPage, icon: 'search'},

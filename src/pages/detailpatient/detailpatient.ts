@@ -37,8 +37,12 @@ export class DetailpatientPage {
   identification_number_:string;
   sex_:string;
  
-  constructor(private af: AngularFireDatabase,public navCtrl: NavController, public navParams: NavParams,
-    public geolocation: Geolocation, private launchNavigator:LaunchNavigator, private platform: Platform,
+  constructor(private af: AngularFireDatabase,
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    public geolocation: Geolocation, 
+    private launchNavigator:LaunchNavigator, 
+    private platform: Platform,
     public storage: Storage) {
   }
 

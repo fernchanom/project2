@@ -21,6 +21,8 @@ import { DetailpatientPage } from '../pages/detailpatient/detailpatient';
 import { GeolocationPage } from '../pages/geolocation/geolocation';
 import { ResultPage } from '../pages/result/result';
 import { LoginPage } from '../pages/login/login';
+import { DetailcheckupPage } from '../pages/detailcheckup/detailcheckup';
+
 
 
 import { IonicStorageModule } from '@ionic/storage';
@@ -62,6 +64,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     GeolocationPage,
     ResultPage,
     LoginPage,
+    DetailcheckupPage,
 
 
 
@@ -92,6 +95,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     GeolocationPage,
     ResultPage,
     LoginPage,
+    DetailcheckupPage,
     
 
 
