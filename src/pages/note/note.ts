@@ -53,7 +53,7 @@ import 'rxjs/add/operator/map';
 
  //แสดงข้อมูลทั้งหมดจากฐานข้อมูล
   showData() {
-    this.itemsRef = this.af.list('/');
+    this.itemsRef = this.af.list('/Patient');
     // Use snapshotChanges().map() to store the key
     this.items = this.itemsRef.snapshotChanges().map(changes => {
       console.log(changes)

@@ -16,7 +16,7 @@ export class ResultPage {
   key:string;
   date:string;
   sick:string;
-  next:string;
+
 
   isToogle:boolean = false;
 

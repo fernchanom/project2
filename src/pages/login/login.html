@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-navbar color="bluebar">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Login</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content paddingn>
+  <ion-list inset>
+
+    <div text-center>
+    <ion-img width="300" height="300" src="assets/imgs/bglogin.jpg"></ion-img>
+    </div>
+    <ion-item>
+      <ion-label>Username</ion-label>
+      <ion-input type="text" name="username"  [(ngModel)]="username"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Password</ion-label>
+      <ion-input type="password" name="password"  [(ngModel)]="password"></ion-input>
+    </ion-item>
+    <br>
+
+    <ion-item>
+      <div text-center>
+        <button ion-button block name="loginbtn" color=bluebar secondary medium  (click)=" validateLogin()">Login</button>
+      </div>
+    </ion-item>
+
+
+  </ion-list>
+</ion-content>
