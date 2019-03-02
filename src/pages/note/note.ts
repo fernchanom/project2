@@ -141,11 +141,7 @@ update(note: any) {
   // });
 
 
-    this.navCtrl.push(DetailpatientPage,{
-      companyName: 'aaaaaaaaaaa',
-      companyWebsite: 'bbbbbbbbbbb'
-      }
-      );
+    this.navCtrl.push(DetailpatientPage);
     }
 
 

@@ -40,6 +40,7 @@ export class ResultPage {
   this.itemsRef = this.af.list('/Medicalcheckup');
   // Use snapshotChanges().map() to store the key
   this.items = this.itemsRef.snapshotChanges().map(changes => {
+    console.log(changes)
     return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
   });
 }
@@ -81,18 +82,15 @@ update(result: any) {
   this.isToogle = !this.isToogle;
 }
 
-goToDetailcheckup() {
-  this.navCtrl.push(DetailcheckupPage);
-  }
 
-//แสดงข้อมูลคนไข้
-goToDetailpatient() {
+//แสดงผลการตรวจคนไข้
+goToDetailcheckup() {
   // firstName = firstName;
   this.storage.set('datecheckup', this.datecheckup);
   this.storage.set('sick', this.sick);
   this.storage.set('nextdate_checkup', this.nextdate_checkup);
   
-  this.navCtrl.push(DetailpatientPage);
+  this.navCtrl.push(DetailcheckupPage);
   }
 
-}
+}//end export class

@@ -30,7 +30,7 @@ export class DetailcheckupPage {
       this.datecheckup_ = val
     })
     this.storage.get('sick').then((val) => {
-      this.sick = val
+      this.sick_ = val
     })
     this.storage.get('nextdate_checkup').then((val) => {
       this.nextdate_checkup_ = val
