@@ -9,6 +9,8 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 import { HightPage } from '../hight/hight';
+import { MediumPage } from '../medium/medium';
+import { LowPage } from '../low/low';
 
 
 @IonicPage()
@@ -28,7 +30,13 @@ export class TypeofpatientPage {
 
   goToHight() {
     this.navCtrl.push(HightPage);
-
   }
+  goToMedium() {
+    this.navCtrl.push(MediumPage);
+  }
+  goToLow() {
+    this.navCtrl.push(LowPage);
+  }
+
 
 }

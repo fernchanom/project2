@@ -23,6 +23,8 @@ import { ResultPage } from '../pages/result/result';
 import { LoginPage } from '../pages/login/login';
 import { DetailcheckupPage } from '../pages/detailcheckup/detailcheckup';
 import { HightPage } from '../pages/hight/hight';
+import { MediumPage } from '../pages/medium/medium';
+import { LowPage } from '../pages/low/low';
 
 
 
@@ -67,6 +69,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     LoginPage,
     DetailcheckupPage,
     HightPage,
+    MediumPage,
+    LowPage,
 
 
 
@@ -99,6 +103,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     LoginPage,
     DetailcheckupPage,
     HightPage,
+    MediumPage,
+    LowPage,
+
     
 
 
