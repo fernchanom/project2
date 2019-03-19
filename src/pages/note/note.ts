@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Item } from 'ionic-angular';
 
 import { DetailpatientPage } from '../detailpatient/detailpatient';
 import { Storage } from '@ionic/storage';
@@ -34,6 +34,10 @@ import 'rxjs/add/operator/map';
     patient_id:string;
     identification_number:string;
 
+    //-----------search-----------//
+    // searchQuery:string;
+    
+
     isToogle:boolean = false;
 
   constructor(
@@ -42,7 +46,7 @@ import 'rxjs/add/operator/map';
     public navParams: NavParams,
     public storage: Storage)
     {
-           
+      //  this.initializeItems();    
               
     }
   ionViewWillEnter() {
@@ -122,7 +126,6 @@ update(note: any) {
 
   //แสดงข้อมูลคนไข้
   goToDetailpatient() {
-    // firstName = firstName;
     this.storage.set('firstName', this.firstName);
     this.storage.set('lastName', this.lastName);
     this.storage.set('dateOfBirth', this.dateOfBirth);
@@ -139,10 +142,50 @@ update(note: any) {
   //   storage.get('name').then((val) => {
   //   console.log('Your age is', val);
   // });
-
-
     this.navCtrl.push(DetailpatientPage);
     }
+
+    
+    //-----------search-----------//
+    topics: string[];
+ 
+    generateTopics() {
+      this.topics = [
+        'AAA',
+        '111',
+        'กกก',
+      ];
+    }
+   
+    getTopics(ev: any) {
+      this.generateTopics();
+      let serVal = ev.target.value;
+      if (serVal && serVal.trim() != '') {
+        this.topics = this.topics.filter((topic) => {
+          return (topic.toLowerCase().indexOf(serVal.toLowerCase()) > -1);
+        })
+      }
+    }
+
+
+    //-----------search-----------//
+    // initializeItems() {
+    //   this.items = [
+        
+    //   ];
+    // }
+
+    // getItems(ev: any) {
+    //   this.initializeItems();
+
+    //   let val = ev.target.value;
+
+    //   if(val && val.trim() != '') {
+    //     this.items = this.items.filter((item) => {
+    //       return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
+    //     })
+    //   }
+    // }
 
 
 }//end export class

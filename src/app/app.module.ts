@@ -22,6 +22,7 @@ import { GeolocationPage } from '../pages/geolocation/geolocation';
 import { ResultPage } from '../pages/result/result';
 import { LoginPage } from '../pages/login/login';
 import { DetailcheckupPage } from '../pages/detailcheckup/detailcheckup';
+import { HightPage } from '../pages/hight/hight';
 
 
 
@@ -65,6 +66,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     ResultPage,
     LoginPage,
     DetailcheckupPage,
+    HightPage,
 
 
 
@@ -96,6 +98,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     ResultPage,
     LoginPage,
     DetailcheckupPage,
+    HightPage,
     
 
 

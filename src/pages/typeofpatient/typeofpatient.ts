@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-/**
- * Generated class for the TypeofpatientPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { Storage } from '@ionic/storage';
+
+
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+
+import { HightPage } from '../hight/hight';
+
 
 @IonicPage()
 @Component({
@@ -20,6 +23,12 @@ export class TypeofpatientPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad TypeofpatientPage');
+  }
+
+
+  goToHight() {
+    this.navCtrl.push(HightPage);
+
   }
 
 }

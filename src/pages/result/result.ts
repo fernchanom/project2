@@ -19,6 +19,7 @@ export class ResultPage {
   datecheckup:string;
   sick:string;
   nextdate_checkup:string;
+  patient_id_:string;
 
 
   isToogle:boolean = false;
@@ -51,6 +52,7 @@ select(item) {
   this.datecheckup = item.result.datecheckup;
   this.sick = item.result.sick;
   this.nextdate_checkup = item.result.nextdate_checkup;
+  this.patient_id_ = item.result.patient_id_;
 
   this.key = item.key;
 }
@@ -89,7 +91,8 @@ goToDetailcheckup() {
   this.storage.set('datecheckup', this.datecheckup);
   this.storage.set('sick', this.sick);
   this.storage.set('nextdate_checkup', this.nextdate_checkup);
-  
+  this.storage.set('patient_id_', this.patient_id_);
+
   this.navCtrl.push(DetailcheckupPage);
   }
 

@@ -8,6 +8,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import firebase from 'firebase';
 import { NotePage } from '../note/note';
+import { AlertController } from 'ionic-angular';
 
 
 /**
@@ -32,7 +33,8 @@ export class LoginPage {
     private af: AngularFireDatabase,
     public navCtrl: NavController, 
     public navParams: NavParams,
-    public storage: Storage){
+    public storage: Storage,
+    private alertCtrl: AlertController){
   }
 
 
@@ -78,6 +80,14 @@ export class LoginPage {
             console.log("username :", this.username)
             console.log("usernameData :", this.myPerson[key].Username)
             console.log("Login fail")  ;  
+            //Alert here
+            let alert = this.alertCtrl.create
+              ({
+                title: 'ข้อมูลไม่ถูกต้อง',
+                subTitle: 'Username หรือ Password ของท่านไม่ถูกต้อง กรุณาล็อคอินอีกครั้ง',
+                buttons: ['OK']
+              });
+            alert.present();
           }  
         }
   
@@ -86,3 +96,4 @@ export class LoginPage {
   
 
 }
+//Zameawza0821807459

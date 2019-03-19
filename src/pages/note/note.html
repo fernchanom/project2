@@ -21,11 +21,6 @@
 
 <ion-content padding>
  
-<ion-searchbar>
-
-</ion-searchbar>
-
-
 
 
   <form *ngIf="isToogle" novalidate #note="ngForm" (ngSubmit)="save(note.value)">
@@ -42,20 +37,28 @@
       </ion-item>
 
       <!-- ***** -->
+      
       <br>
-      <ion-item>
-        <tr>เพศ</tr> </ion-item>
-        <!-- <ion-input [(ngModel)]="bloodType" type="text" name="bloodType" required></ion-input> -->
-        <ion-list radio-group [(ngModel)]="sex">
+      <ion-item><tr>เพศ</tr> </ion-item>
+        <ion-list radio-group [(ngModel)]="sex" name="sex">
             <ion-item>
               <ion-label>ชาย</ion-label>
-              <ion-radio  value="male" checked="true"></ion-radio>
+              <ion-radio value="ชาย" checked></ion-radio>
             </ion-item>
             <ion-item>
               <ion-label>หญิง</ion-label>
-              <ion-radio value="female"></ion-radio>
+              <ion-radio value="หญิง"></ion-radio>
             </ion-item>
-        </ion-list>          
+        </ion-list>
+
+        <!-- <ion-item>
+            <ion-label>เพศ</ion-label>
+                <ion-select [(ngModel)]="sex" name="sex" required> แบบให้เลือกมีหน้า Alert ออกมา
+                  <ion-option value="ชาย" >ชาย</ion-option>
+                  <ion-option value="หญิง" >หญิง</ion-option>
+                </ion-select>
+      
+            </ion-item> -->
       <!-- ***** -->
       
 
@@ -85,22 +88,23 @@
         <tr>กรุ๊ปเลือด</tr> </ion-item>
         <!-- <ion-input [(ngModel)]="bloodType" type="text" name="bloodType" required></ion-input> -->
       
-        <ion-list radio-group >
+
+        <ion-list radio-group [(ngModel)]="bloodType" name="bloodType"> 
             <ion-item>
               <ion-label>A</ion-label>
-              <ion-radio value="a" checked="true"></ion-radio>
+              <ion-radio value="A" checked="true"></ion-radio>
             </ion-item>
             <ion-item>
               <ion-label>B</ion-label>
-              <ion-radio value="b"></ion-radio>
+              <ion-radio value="B"></ion-radio>
             </ion-item>
             <ion-item>
               <ion-label>O</ion-label>
-              <ion-radio value="o"></ion-radio>
+              <ion-radio value="O"></ion-radio>
             </ion-item>
             <ion-item>
               <ion-label>AB</ion-label>
-              <ion-radio value="ab"></ion-radio>
+              <ion-radio value="AB"></ion-radio>
             </ion-item>
         </ion-list>    
       <!-- </ion-item> -->
@@ -117,18 +121,18 @@
       <ion-item>
         <tr>ประเภทความเสี่ยง</tr> </ion-item>
       
-        <ion-list radio-group >
+        <ion-list radio-group [(ngModel)]="riskType" name="riskType">
             <ion-item>
               <ion-label>สูง</ion-label>
-              <ion-radio value="้high" checked="true"></ion-radio>
+              <ion-radio value="สูง" checked="true"></ion-radio>
             </ion-item>
             <ion-item>
               <ion-label>ปานกลาง</ion-label>
-              <ion-radio value="medium"></ion-radio>
+              <ion-radio value="ปานกลาง"></ion-radio>
             </ion-item>
             <ion-item>
               <ion-label>ต่ำ</ion-label>
-              <ion-radio value="low"></ion-radio>
+              <ion-radio value="ต่ำ"></ion-radio>
             </ion-item>
         </ion-list>  
        <!-- ---****---- -->  
@@ -155,10 +159,32 @@
   </form>
   
 
-  <!-- <button ion-item *ngFor="let c of courses" (click)="itemSelected(c)"> -->
+  <!-- <ion-searchbar (ionInput)="getTopics($event)" [showCancelButton]="shouldShowCancel" 
+  (ionCancel)="onCancel($event)"></ion-searchbar>
+ 
+  <ion-list>
+    <ion-item *ngFor="let topic of topics">
+      {{ topic }}
+    </ion-item>
+  </ion-list> -->
 
 
   <ion-list>
+
+<!-------------------------  search ---------------------------------->
+          <ion-searchbar (ionInput)="getTopics($event)" [showCancelButton]="shouldShowCancel" 
+          (ionCancel)="onCancel($event)"></ion-searchbar>
+         
+          <ion-list>
+            <ion-item *ngFor="let topic of topics">
+              {{ topic }}
+            </ion-item>
+          </ion-list>
+    
+
+    <!-- <ion-searchbar (ionInput)="getItems($event)" clearInput></ion-searchbar> -->
+
+
     <ion-item-sliding *ngFor="let item of items | async" (click)="select(item)" >
 
         <ion-item-options side="left">

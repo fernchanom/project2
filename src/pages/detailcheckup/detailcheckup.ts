@@ -17,6 +17,7 @@ export class DetailcheckupPage {
   datecheckup_:string;
   sick_:string;
   nextdate_checkup_:string;
+  // send_id:string;
 
   constructor(private af: AngularFireDatabase,
     public navCtrl: NavController, 
@@ -35,6 +36,9 @@ export class DetailcheckupPage {
     this.storage.get('nextdate_checkup').then((val) => {
       this.nextdate_checkup_ = val
     })
+    // this.storage.get('patient_id_').then((val) => {
+    //   this.send_id = val
+    // })
 
     console.log('ionViewDidLoad DetailcheckupPage');
   }

@@ -18,15 +18,11 @@
 
 <ion-content padding>
 
-    <!-- <ion-item>
+    <ion-item>
         <ion-label>เลือกวันที่ต้องการ</ion-label>
-        <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="myDate"></ion-datetime>
-    </ion-item>  -->
+        <ion-datetime displayFormat="DD/MM/YYYY" min="2019" max="2030-10-31" [(ngModel)]="myDate"></ion-datetime>
+    </ion-item> 
 
-              <span>Date</span>
-              <input type="date" [(ngModel)]="myDate">
-
-          <!-- <h3>{{myDate | date: "MM-dd-yyyy"}}</h3> -->
 
     
 </ion-content>

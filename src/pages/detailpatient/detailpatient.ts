@@ -37,6 +37,7 @@ export class DetailpatientPage {
   identification_number_:string;
   sex_:string;
  
+ 
   constructor(private af: AngularFireDatabase,
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -112,8 +113,12 @@ navigateLocation(){
 
 
   goToResult() {
+    this.storage.set('patient_id_',this.patient_id_);
+
     this.navCtrl.push(ResultPage);
     }
+
+
 
 }
 
