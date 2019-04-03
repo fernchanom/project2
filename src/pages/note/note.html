@@ -151,26 +151,16 @@
   
       <div padding>
         <button ion-button type="submit" [disabled]="!note.form.valid">เพิ่ม</button>
-        <button ion-button type="button" color="secondary" [disabled]="!note.form.valid" 
-        (click)="update(note.value)">แก้ไข</button>
+        <!-- <button ion-button type="button" color="secondary" [disabled]="!note.form.valid" 
+        (click)="update(note.value)">แก้ไข</button> -->
       </div>
   
     </ion-list>
   </form>
   
 
-  <!-- <ion-searchbar (ionInput)="getTopics($event)" [showCancelButton]="shouldShowCancel" 
-  (ionCancel)="onCancel($event)"></ion-searchbar>
- 
+  
   <ion-list>
-    <ion-item *ngFor="let topic of topics">
-      {{ topic }}
-    </ion-item>
-  </ion-list> -->
-
-
-  <ion-list>
-
 <!-------------------------  search ---------------------------------->
           <ion-searchbar (ionInput)="getTopics($event)" [showCancelButton]="shouldShowCancel" 
           (ionCancel)="onCancel($event)"></ion-searchbar>
@@ -180,21 +170,20 @@
               {{ topic }}
             </ion-item>
           </ion-list>
-    
+<!-------------------------  end  search ---------------------------------->
 
-    <!-- <ion-searchbar (ionInput)="getItems($event)" clearInput></ion-searchbar> -->
 
 
     <ion-item-sliding *ngFor="let item of items | async" (click)="select(item)" >
 
-        <ion-item-options side="left">
+        <!-- <ion-item-options side="left">
             <button color="bluebar" ion-button  (click)="goToDetailpatient()">
              <ion-icon name="seeMore"></ion-icon>
              แสดงข้อมูล
             </button>
-         </ion-item-options>
+         </ion-item-options> -->
       
-      <ion-item>
+      <ion-item (click)="goToDetailpatient()">
           <h3>{{item.note.firstName}} {{item.note.lastName}}</h3>
           <p>เลขประจำตัวคนไข้ : {{item.note.patient_id}}</p>
       </ion-item>

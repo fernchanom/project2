@@ -126,6 +126,7 @@ update(note: any) {
 
   //แสดงข้อมูลคนไข้
   goToDetailpatient() {
+    // firstName = firstName;
     this.storage.set('firstName', this.firstName);
     this.storage.set('lastName', this.lastName);
     this.storage.set('dateOfBirth', this.dateOfBirth);
@@ -151,9 +152,10 @@ update(note: any) {
  
     generateTopics() {
       this.topics = [
-        'AAA',
-        '111',
-        'กกก',
+        // 'AAA',
+        // '111',
+        // 'กกก',
+        //item.note.firstName
       ];
     }
    
@@ -165,7 +167,7 @@ update(note: any) {
           return (topic.toLowerCase().indexOf(serVal.toLowerCase()) > -1);
         })
       }
-    }
+    } 
 
 
     //-----------search-----------//

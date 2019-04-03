@@ -19,8 +19,15 @@ import { LowPage } from '../low/low';
   templateUrl: 'typeofpatient.html',
 })
 export class TypeofpatientPage {
+  items;
+  Patient;
+  note;
+  firstName;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams,
+    public afd : AngularFireDatabase) {
+      // this.goToHight();
   }
 
   ionViewDidLoad() {
@@ -30,7 +37,16 @@ export class TypeofpatientPage {
 
   goToHight() {
     this.navCtrl.push(HightPage);
+    // this.afd.list('Patient/').valueChanges().subscribe{
+    //   data => {
+    //     console.log(data)
+    //     this.items = data
+    //   }
+    // }  
+
   }
+
+
   goToMedium() {
     this.navCtrl.push(MediumPage);
   }

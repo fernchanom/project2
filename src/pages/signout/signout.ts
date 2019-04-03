@@ -37,7 +37,7 @@ export class SignoutPage {
           text: 'ใช่',
           handler: () => {
             console.log('logout');
-            this.navCtrl.push(LoginPage);
+            //this.navCtrl.push(LoginPage);
 
           }
         }

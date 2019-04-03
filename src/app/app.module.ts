@@ -7,7 +7,6 @@ import { LaunchNavigator } from '@ionic-native/launch-navigator';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 //import { ListPage } from '../pages/list/list';
-//import { AddpatientPage } from '../pages/addpatient/addpatient';
 import { SearchpatientPage } from '../pages/searchpatient/searchpatient';
 import { TypeofpatientPage } from '../pages/typeofpatient/typeofpatient';
 import { TodayPage } from '../pages/today/today';
@@ -15,7 +14,6 @@ import { NextdayPage } from '../pages/nextday/nextday';
 import { SignoutPage } from '../pages/signout/signout';
 import { NotePage } from '../pages/note/note';
 //import { MapPage } from '../pages/map/map';
-import { MappatientPage } from '../pages/mappatient/mappatient';
 import { PatientPage } from '../pages/patient/patient';
 import { DetailpatientPage } from '../pages/detailpatient/detailpatient';
 import { GeolocationPage } from '../pages/geolocation/geolocation';
@@ -25,6 +23,7 @@ import { DetailcheckupPage } from '../pages/detailcheckup/detailcheckup';
 import { HightPage } from '../pages/hight/hight';
 import { MediumPage } from '../pages/medium/medium';
 import { LowPage } from '../pages/low/low';
+import { SettingPage } from '../pages/setting/setting';
 
 
 
@@ -53,7 +52,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     MyApp,
     HomePage,
     //ListPage,
-    //AddpatientPage,
     PatientPage,
     SearchpatientPage,
     TypeofpatientPage,
@@ -62,7 +60,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     SignoutPage,
     NotePage,
     //MapPage,
-    MappatientPage,
     DetailpatientPage,
     GeolocationPage,
     ResultPage,
@@ -71,6 +68,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     HightPage,
     MediumPage,
     LowPage,
+    SettingPage,
 
 
 
@@ -87,7 +85,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     MyApp,
     HomePage,
    // ListPage,
-   // AddpatientPage,
     PatientPage,
     SearchpatientPage,
     TypeofpatientPage,
@@ -96,7 +93,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     SignoutPage,
     NotePage,
     //MapPage,
-    MappatientPage,
     DetailpatientPage,
     GeolocationPage,
     ResultPage,
@@ -105,6 +101,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     HightPage,
     MediumPage,
     LowPage,
+    SettingPage,
 
     
 

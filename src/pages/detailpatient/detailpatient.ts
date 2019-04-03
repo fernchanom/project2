@@ -88,15 +88,19 @@ export class DetailpatientPage {
     this.sex_ = val
   });
 
-
+//---------------------   google map   ------------------------//
     this.geolocation.getCurrentPosition().then(position =>{
     this.latitude = position.coords.latitude;
     this.longitude = position.coords.longitude;
+//---------------------   google map   ------------------------//
   },error=>{
     console.log('error',error);
   });
 }
 
+
+
+//---------------------   google map   ------------------------//
 navigateLocation(){
   let options: LaunchNavigatorOptions = {
     start:[this.latitude,this.longitude],
@@ -110,6 +114,7 @@ navigateLocation(){
   })
 
   }
+//--------------------- end  google map   ------------------------//
 
 
   goToResult() {

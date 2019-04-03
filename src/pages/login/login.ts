@@ -65,34 +65,71 @@ export class LoginPage {
     console.log("changes", this.items);
   }
 
-    validateLogin(){
+  validateLogin(){
 
-      Object.keys(this.myPerson).forEach(key=> {
-        console.log("####", this.myPerson[key].Username);
-        if (this.username != "" && this.password != "") {
-          if (this.username == this.myPerson[key].Username && this.password == this.myPerson[key].Password) {
-            console.log("username :", this.username)
-            console.log("usernameData :", this.myPerson[key].Username)
-            console.log("Login Success");
-            this.navCtrl.push(NotePage)
-          }
-          else {
-            console.log("username :", this.username)
-            console.log("usernameData :", this.myPerson[key].Username)
-            console.log("Login fail")  ;  
-            //Alert here
-            let alert = this.alertCtrl.create
-              ({
-                title: 'ข้อมูลไม่ถูกต้อง',
-                subTitle: 'Username หรือ Password ของท่านไม่ถูกต้อง กรุณาล็อคอินอีกครั้ง',
-                buttons: ['OK']
-              });
-            alert.present();
-          }  
+    let userPass = []
+
+    Object.keys(this.myPerson).forEach(key=> {
+      console.log("####", this.myPerson[key].Username);
+      // if (this.username != "" && this.password != "")
+      // {
+        if (this.username == this.myPerson[key].Username && this.password == this.myPerson[key].Password)
+        {
+          console.log("username :", this.username)
+          console.log("usernameData :", this.myPerson[key].Username)
+          console.log("Login Success");
+          // this.navCtrl.push(NotePage)
+
+          userPass.push(this.username , this.password);
+
         }
-  
-      });
-  }
+        // else
+        // {
+        //   console.log("username :", this.username)
+        //   console.log("usernameData :", this.myPerson[key].Username)
+        //   console.log("Login fail")  ;
+        //   //Alert here
+        //   // let alert = this.alertCtrl.create
+        //   //   ({
+        //   //     title: 'ข้อมูลไม่ถูกต้อง',
+        //   //     subTitle: 'Username หรือ Password ของท่านไม่ถูกต้อง กรุณาล็อคอินอีกครั้ง',
+        //   //     buttons: ['OK']
+        //   //   });
+        //   // alert.present();
+        // }
+       //}
+
+    });
+    // {{userPass}}
+    if (this.username == null && this.password == null)
+    {
+      //Alert here
+      let alert = this.alertCtrl.create
+        ({
+          title: 'ข้อมูลไม่ถูกต้อง',
+          subTitle: 'ชื่อผู้ใช้ หรือ รหัสผ่าน ของท่านไม่ถูกต้อง กรุณาเข้าสู่ระบบอีกครั้ง',
+          buttons: ['ตกลง']
+        });
+      alert.present();
+    }
+
+    else if(userPass[0] == this.username  && userPass[1] == this.password)
+    {
+      this.navCtrl.push(NotePage)
+    }
+
+    else
+    {
+      //Alert here
+      let alert = this.alertCtrl.create
+        ({
+          title: 'ข้อมูลไม่ถูกต้อง',
+          subTitle: 'ชื่อผู้ใช้ หรือ รหัสผ่าน ของท่านไม่ถูกต้อง กรุณาเข้าสู่ระบบอีกครั้ง',
+          buttons: ['ตกลง']
+        });
+      alert.present();
+    }
+}
   
 
 }
