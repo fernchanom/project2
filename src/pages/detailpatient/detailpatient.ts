@@ -36,6 +36,7 @@ export class DetailpatientPage {
   patient_id_:string;
   identification_number_:string;
   sex_:string;
+  patient;
  
  
   constructor(private af: AngularFireDatabase,
@@ -51,42 +52,20 @@ export class DetailpatientPage {
   }
 
   ionViewDidLoad() {
-  this.storage.get('firstName').then((val) => {
-    this.first_name = val
-  })
-  this.storage.get('lastName').then((val) => {
-    this.last_name = val
-  })
-  this.storage.get('dateOfBirth').then((val) => {
-    this.date_of_birth = val
-  })
-  this.storage.get('age').then((val) => {
-    this.age_ = val
-  })
-  this.storage.get('bloodType').then((val) => {
-    this.blood_type = val
-  })
-  this.storage.get('medicalProblems').then((val) => {
-    this.medical_problems = val
-  })
-  this.storage.get('riskType').then((val) => {
-    this.risk_type = val
-  })
-  this.storage.get('address').then((val) => {
-    this.address_ = val
-  })
-  this.storage.get('tel').then((val) => {
-    this.tel_number = val
-  })
-  this.storage.get('patient_id').then((val) => {
-    this.patient_id_ = val
-  })
-  this.storage.get('identification_number').then((val) => {
-    this.identification_number_ = val
-  })
-  this.storage.get('sex').then((val) => {
-    this.sex_ = val
-  });
+  this.patient = this.navParams.get('patient'); //รับค่าตัวแปร patient ที่ส่งมาจากหน้า note
+  // console.log("patientpatient",this.patient.note.address);
+    this.first_name = this.patient.note.firstName;
+    this.last_name = this.patient.note.lastName;
+    this.date_of_birth = this.patient.note.dateOfBirth;
+    this.age_ = this.patient.note.age;
+    this.blood_type = this.patient.note.bloodType;
+    this.medical_problems = this.patient.note.medicalProblems;
+    this.risk_type = this.patient.note.riskType;
+    this.address_ = this.patient.note.address;
+    this.tel_number = this.patient.note.tel;
+    this.patient_id_ = this.patient.note.patient_id;
+    this.identification_number_ = this.patient.note.identification_number;
+    this.sex_ = this.patient.note.sex;
 
 //---------------------   google map   ------------------------//
     this.geolocation.getCurrentPosition().then(position =>{
