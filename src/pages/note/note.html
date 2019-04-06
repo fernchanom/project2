@@ -162,19 +162,19 @@
   
   <ion-list>
 <!-------------------------  search ---------------------------------->
-          <ion-searchbar (ionInput)="getTopics($event)" [showCancelButton]="shouldShowCancel" 
+          <ion-searchbar (ionInput)="search($event)" [showCancelButton]="shouldShowCancel" 
           (ionCancel)="onCancel($event)"></ion-searchbar>
          
-          <ion-list>
+          <!-- <ion-list>
             <ion-item *ngFor="let topic of topics">
               {{ topic }}
             </ion-item>
-          </ion-list>
+          </ion-list> -->
 <!-------------------------  end  search ---------------------------------->
 
 
-
-    <ion-item-sliding *ngFor="let item of items | async" (click)="select(item)" >
+    <div *ngIf="searchInput == false">
+    <ion-item-sliding *ngFor="let item of items | async" (click)="select(item)">
 
         <!-- <ion-item-options side="left">
             <button color="bluebar" ion-button  (click)="goToDetailpatient()">
@@ -183,7 +183,7 @@
             </button>
          </ion-item-options> -->
       
-      <ion-item (click)="goToDetailpatient()">
+      <ion-item (click)="goToDetailpatient(item)">
           <h3>{{item.note.firstName}} {{item.note.lastName}}</h3>
           <p>เลขประจำตัวคนไข้ : {{item.note.patient_id}}</p>
       </ion-item>
@@ -195,6 +195,24 @@
         </button>
      </ion-item-options>
     </ion-item-sliding>
+    </div>
+
+    <div *ngIf="searchInput == true">
+      <ion-item-sliding *ngFor="let item of topics" (click)="select(item)">
+        
+        <ion-item (click)="goToDetailpatient(item.key)">
+            <h3>{{item.note.firstName}} {{item.note.lastName}}</h3>
+            <p>เลขประจำตัวคนไข้ : {{item.note.patient_id}}</p>
+        </ion-item>
+
+        <ion-item-options side="right">
+          <button ion-button color="danger" (click)="delete(item)">
+           <ion-icon name="trash"></ion-icon>
+           ลบข้อมูล
+          </button>
+       </ion-item-options>
+      </ion-item-sliding> 
+    </div>
   </ion-list>
 
  </ion-content>

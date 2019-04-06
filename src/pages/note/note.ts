@@ -39,6 +39,8 @@ import 'rxjs/add/operator/map';
     
 
     isToogle:boolean = false;
+    patient = [];
+    searchInput:boolean = false;
 
   constructor(
     private af: AngularFireDatabase,
@@ -57,10 +59,11 @@ import 'rxjs/add/operator/map';
 
  //แสดงข้อมูลทั้งหมดจากฐานข้อมูล
   showData() {
-    this.itemsRef = this.af.list('/Patient');
+    this.itemsRef = this.af.list('/Patient/');
     // Use snapshotChanges().map() to store the key
     this.items = this.itemsRef.snapshotChanges().map(changes => {
       console.log(changes)
+      this.patient = changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
     });
   }
@@ -140,9 +143,9 @@ update(note: any) {
     this.storage.set('identification_number', this.identification_number);
     //radio
     this.storage.set('sex', this.sex);
-  //   storage.get('name').then((val) => {
-  //   console.log('Your age is', val);
-  // });
+    //   storage.get('name').then((val) => {
+    //   console.log('Your age is', val);
+    // });
     this.navCtrl.push(DetailpatientPage);
     }
 
@@ -150,24 +153,30 @@ update(note: any) {
     //-----------search-----------//
     topics: string[];
  
-    generateTopics() {
-      this.topics = [
-        // 'AAA',
-        // '111',
-        // 'กกก',
-        //item.note.firstName
-      ];
-    }
+  // generateTopics() {
+  //   this.topics = this.patient;
+  //   // this.topics = [
+  //     // 'AAA',
+  //     // '111',
+  //     // 'กกก',
+  //     //item.note.firstName
+  //   // ];
+  // }
    
-    getTopics(ev: any) {
-      this.generateTopics();
-      let serVal = ev.target.value;
-      if (serVal && serVal.trim() != '') {
-        this.topics = this.topics.filter((topic) => {
-          return (topic.toLowerCase().indexOf(serVal.toLowerCase()) > -1);
-        })
-      }
-    } 
+  search(ev: any) {
+    // this.generateTopics();
+    this.topics = this.patient;
+    this.searchInput = true;
+    let serVal = ev.target.value;
+    if (serVal && serVal.trim() != '') {
+        this.topics = this.patient.filter((topic) => {
+          // console.log(topic);
+        if ((topic.note.firstName.toLowerCase().indexOf(serVal.toLowerCase()) > -1) || (topic.note.patient_id.toLowerCase().indexOf(serVal.toLowerCase()) > -1)) {
+          return topic.note;
+        }
+      })
+    }
+  } 
 
 
     //-----------search-----------//
