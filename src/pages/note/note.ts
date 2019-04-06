@@ -120,7 +120,7 @@ import 'rxjs/add/operator/map';
   //แสดงข้อมูลคนไข้
   goToDetailpatient(patient) {
     // console.log("patient: ",patient);
-    this.navCtrl.push(DetailpatientPage,{patient: this.patient}); //ไปหน้า Detailpatient พร้อมส่งค่าตัวแปร patient
+    this.navCtrl.push(DetailpatientPage,{patient: patient}); //ไปหน้า Detailpatient พร้อมส่งค่าตัวแปร patient
   }
 
   //-----------search-----------//   
