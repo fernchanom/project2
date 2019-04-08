@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "976541836092",
+    "firebase_url": "https://project-3dc75.firebaseio.com",
+    "project_id": "project-3dc75",
+    "storage_bucket": "project-3dc75.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976541836092:android:8511cfbe375e186b",
+        "android_client_info": {
+          "package_name": "com.manageandnavigate.project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgc3RXOwq_YrmYmIxzs8_2kovykV4iqpw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "976541836092-g4nodu8e9go3namuvvke6gpifr06n1di.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

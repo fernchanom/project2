@@ -1,0 +1,228 @@
+
+<ion-header>
+  <ion-toolbar color="bluebar">
+
+    <button ion-button icon-only menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+ 
+    <ion-title>คนไข้</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only color="royal" (click)="openForm()">
+        <ion-icon name="add-circle"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+ 
+
+
+<ion-content padding>
+ 
+
+
+  <form *ngIf="isToogle" novalidate #note="ngForm" (ngSubmit)="save(note.value)">
+    <ion-list>
+
+      <ion-item>
+        <ion-label floating>ชื่อ</ion-label>
+        <ion-input [(ngModel)]="firstName" type="text" name="firstName" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>นามสกุล</ion-label>
+        <ion-input [(ngModel)]="lastName" type="text" name="lastName" required></ion-input>
+      </ion-item>
+
+      <!-- ***** -->
+      
+      <br>
+      <ion-item><tr>เพศ</tr> </ion-item>
+        <ion-list radio-group [(ngModel)]="sex" name="sex">
+            <ion-item>
+              <ion-label>ชาย</ion-label>
+              <ion-radio value="ชาย" checked></ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-label>หญิง</ion-label>
+              <ion-radio value="หญิง"></ion-radio>
+            </ion-item>
+        </ion-list>
+
+        <!-- <ion-item>
+            <ion-label>เพศ</ion-label>
+                <ion-select [(ngModel)]="sex" name="sex" required> แบบให้เลือกมีหน้า Alert ออกมา
+                  <ion-option value="ชาย" >ชาย</ion-option>
+                  <ion-option value="หญิง" >หญิง</ion-option>
+                </ion-select>
+      
+            </ion-item> -->
+      <!-- ***** -->
+      
+
+      <ion-item>
+        <ion-label floating>เลขประจำตัวคนไข้</ion-label>
+        <ion-input [(ngModel)]="patient_id" type="text" name="patient_id" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>เลขประจำตัวประชาชน</ion-label>
+        <ion-input [(ngModel)]="identification_number" type="text" name="identification_number" required></ion-input>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label floating>วัน/เดือน/ปีเกิด</ion-label>
+        <ion-datetime [(ngModel)]="dateOfBirth" type="text" displayFormat="MM/DD/YYYY" name="dateOfBirth" required></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>อายุ (ปี)</ion-label>
+        <ion-input [(ngModel)]="age" type="text" name="age" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-row class="center show-album">
+            <!-- getPicture ส่ง 0 คือเลืกรูกจากเครื่อง ส่ง 1 คือ ถ่ายจากกล้อง -->
+            <label class="center" (click)="getPicture(0)" color="blue">Select Image</label>
+        </ion-row>
+        <ion-card>
+          <img [src]="captureDataUrl" *ngIf="captureDataUrl"/>
+        </ion-card>
+      </ion-item>
+
+      <!-- ***** -->
+      <br>
+      <ion-item>
+        <tr>กรุ๊ปเลือด</tr> </ion-item>
+        <!-- <ion-input [(ngModel)]="bloodType" type="text" name="bloodType" required></ion-input> -->
+      
+
+        <ion-list radio-group [(ngModel)]="bloodType" name="bloodType"> 
+            <ion-item>
+              <ion-label>A</ion-label>
+              <ion-radio value="A" checked="true"></ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-label>B</ion-label>
+              <ion-radio value="B"></ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-label>O</ion-label>
+              <ion-radio value="O"></ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-label>AB</ion-label>
+              <ion-radio value="AB"></ion-radio>
+            </ion-item>
+        </ion-list>    
+      <!-- </ion-item> -->
+      <!-- ***** -->
+
+      <ion-item>
+        <ion-label floating>โรคประจำตัว</ion-label>
+        <ion-input [(ngModel)]="medicalProblems" type="text" name="medicalProblems" required></ion-input>
+      </ion-item>
+
+
+      <!-- ---****---- -->
+      <br>
+      <ion-item>
+        <tr>ประเภทความเสี่ยง</tr> </ion-item>
+      
+        <ion-list radio-group [(ngModel)]="riskType" name="riskType">
+            <ion-item>
+              <ion-label>สูง</ion-label>
+              <ion-radio value="สูง" checked="true"></ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-label>ปานกลาง</ion-label>
+              <ion-radio value="ปานกลาง"></ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-label>ต่ำ</ion-label>
+              <ion-radio value="ต่ำ"></ion-radio>
+            </ion-item>
+        </ion-list>  
+       <!-- ---****---- -->  
+     
+
+      <ion-item>
+        <ion-label floating>ที่อยู่</ion-label>
+        <ion-input [(ngModel)]="address" type="text" name="address" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>เบอร์โทรศัพท์</ion-label>
+        <ion-input [(ngModel)]="tel" type="tel" name="tel" required></ion-input>
+      </ion-item>
+
+  
+      <div padding>
+        <button ion-button type="submit" [disabled]="!note.form.valid">เพิ่ม</button>
+        <!-- <button ion-button type="button" color="secondary" [disabled]="!note.form.valid" 
+        (click)="update(note.value)">แก้ไข</button> -->
+      </div>
+  
+    </ion-list>
+  </form>
+  
+
+  
+  <ion-list>
+<!-------------------------  search ---------------------------------->
+          <ion-searchbar *ngIf="!isToogle" (ionInput)="search($event)" [showCancelButton]="shouldShowCancel" 
+          (ionCancel)="onCancel($event)"></ion-searchbar>
+         
+          <!-- <ion-list>
+            <ion-item *ngFor="let topic of topics">
+              {{ topic }}
+            </ion-item>
+          </ion-list> -->
+<!-------------------------  end  search ---------------------------------->
+
+
+    <div *ngIf="!searchInput && !isToogle">
+    <ion-item-sliding *ngFor="let item of items | async" (click)="select(item)">
+
+        <!-- <ion-item-options side="left">
+            <button color="bluebar" ion-button  (click)="goToDetailpatient()">
+             <ion-icon name="seeMore"></ion-icon>
+             แสดงข้อมูล
+            </button>
+         </ion-item-options> -->
+      
+      <ion-item (click)="goToDetailpatient(item.key,item)">
+          <h3>{{item.note.firstName}} {{item.note.lastName}}</h3>
+          <p>เลขประจำตัวคนไข้ : {{item.note.patient_id}}</p>
+      </ion-item>
+
+      <ion-item-options side="right">
+        <button ion-button color="danger" (click)="delete(item)">
+         <ion-icon name="trash"></ion-icon>
+         ลบข้อมูล
+        </button>
+     </ion-item-options>
+    </ion-item-sliding>
+    </div>
+
+    <div *ngIf="searchInput && !isToogle">
+      <ion-item-sliding *ngFor="let item of topics" (click)="select(item)">
+        
+        <ion-item (click)="goToDetailpatient(item.key,item)">
+            <h3>{{item.note.firstName}} {{item.note.lastName}}</h3>
+            <p>เลขประจำตัวคนไข้ : {{item.note.patient_id}}</p>
+        </ion-item>
+
+        <ion-item-options side="right">
+          <button ion-button color="danger" (click)="delete(item)">
+           <ion-icon name="trash"></ion-icon>
+           ลบข้อมูล
+          </button>
+       </ion-item-options>
+      </ion-item-sliding> 
+    </div>
+  </ion-list>
+
+ </ion-content>

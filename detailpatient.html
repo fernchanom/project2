@@ -1,0 +1,170 @@
+<ion-header>
+
+  <ion-navbar color="bluebar">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>ข้อมูลคนไข้</ion-title>
+  </ion-navbar>
+  
+</ion-header>
+
+<ion-content padding> 
+  <div *ngIf="!isToogle">   
+    <ion-item no-padding>ชื่อ : {{firstName}}</ion-item>
+    <ion-item no-padding>นามสกุล : {{lastName}}</ion-item>
+    <ion-item no-padding>เพศ : {{sex}}</ion-item> 
+    <ion-item no-padding>เลขประจำตัวคนไข้ : {{patient_id}}</ion-item>
+    <ion-item no-padding>เลขประจำตัวประชาชน : {{identification_number}}</ion-item>
+    <ion-item no-padding>วัน/เดือน/ปีเกิด : {{dateOfBirth}}</ion-item>
+    <ion-item no-padding>อายุ (ปี) : {{age}}</ion-item>  
+    <ion-item no-padding>กรุ๊ปเลือด : {{bloodType}}</ion-item>
+    <ion-card>
+        <img center [src]="urlImg"/>
+    </ion-card>
+    <ion-item no-padding>โรคประจำตัว : {{medicalProblems}}</ion-item>
+    <ion-item no-padding>ประเภทความเสี่ยง : {{riskType}}</ion-item>
+    <ion-item no-padding>เบอร์โทรศัพท์ : {{tel}}</ion-item>
+    <ion-item no-padding>ที่อยู่ : {{address}}</ion-item>  
+  </div>
+
+  <div class="form">   
+    <form *ngIf="isToogle" novalidate #note="ngForm" (ngSubmit)="update(note.value)">
+      <ion-list>
+        <ion-item>
+          <ion-label floating>ชื่อ</ion-label>
+          <ion-input [(ngModel)]="firstName" type="text" name="firstName" required value="{{firstName}}"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating>นามสกุล</ion-label>
+          <ion-input [(ngModel)]="lastName" type="text" name="lastName" required value="{{lastName}}"></ion-input>
+        </ion-item>
+        
+        <br>
+        <ion-item><tr>เพศ</tr> </ion-item>
+          <ion-list radio-group [(ngModel)]="sex" name="sex">
+              <ion-item>
+                <ion-label>ชาย</ion-label>
+                <ion-radio value="ชาย" checked></ion-radio>
+              </ion-item>
+              <ion-item>
+                <ion-label>หญิง</ion-label>
+                <ion-radio value="หญิง"></ion-radio>
+              </ion-item>
+          </ion-list>      
+
+        <ion-item>
+          <ion-label floating>เลขประจำตัวคนไข้</ion-label>
+          <ion-input [(ngModel)]="patient_id" type="text" name="patient_id" required value="{{patient_id}}"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating>เลขประจำตัวประชาชน</ion-label>
+          <ion-input [(ngModel)]="identification_number" type="text" name="identification_number" required value="{{identification_number}}"></ion-input>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label floating>วัน/เดือน/ปีเกิด</ion-label>
+          <ion-datetime [(ngModel)]="dateOfBirth" type="text" displayFormat="MM/DD/YYYY" name="dateOfBirth" required></ion-datetime>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating>อายุ (ปี)</ion-label>
+          <ion-input [(ngModel)]="age" type="text" name="age" required value="{{age}}"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-row class="center show-album">
+            <label class="center" (click)="getPicture(0)" color="blue">Select Image</label>
+          </ion-row>
+          <ion-card>
+            <img [src]="urlImg" *ngIf="!captureDataUrl"/>
+            <img [src]="captureDataUrl" *ngIf="captureDataUrl"/>
+          </ion-card>
+        </ion-item>
+
+        <br>
+        <ion-item>
+          <tr>กรุ๊ปเลือด</tr> 
+        </ion-item>      
+          <ion-list radio-group [(ngModel)]="bloodType" name="bloodType"> 
+            <ion-item>
+              <ion-label>A</ion-label>
+              <ion-radio value="A" checked="true"></ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-label>B</ion-label>
+              <ion-radio value="B"></ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-label>O</ion-label>
+              <ion-radio value="O"></ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-label>AB</ion-label>
+              <ion-radio value="AB"></ion-radio>
+            </ion-item>
+          </ion-list>    
+
+        <ion-item>
+          <ion-label floating>โรคประจำตัว</ion-label>
+          <ion-input [(ngModel)]="medicalProblems" type="text" name="medicalProblems" required value="{{medicalProblems}}"></ion-input>
+        </ion-item>
+
+        <br>
+        <ion-item>
+          <tr>ประเภทความเสี่ยง</tr> 
+        </ion-item>
+          <ion-list radio-group [(ngModel)]="riskType" name="riskType">
+            <ion-item>
+              <ion-label>สูง</ion-label>
+              <ion-radio value="สูง" checked="true"></ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-label>ปานกลาง</ion-label>
+              <ion-radio value="ปานกลาง"></ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-label>ต่ำ</ion-label>
+              <ion-radio value="ต่ำ"></ion-radio>
+            </ion-item>
+          </ion-list>       
+
+        <ion-item>
+          <ion-label floating>ที่อยู่</ion-label>
+          <ion-input [(ngModel)]="address" type="text" name="address" required value="{{address}}"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating>เบอร์โทรศัพท์</ion-label>
+          <ion-input [(ngModel)]="tel" type="tel" name="tel" required value="{{tel}}"></ion-input>
+        </ion-item>
+
+        <div padding>
+          <button ion-button type="submit" [disabled]="!note.form.valid">บันทึก</button>
+        </div>
+    
+      </ion-list>
+    </form>
+  </div>
+
+  <br>
+  <button *ngIf="!isToogle" ion-button type="button" (click)="editPatient()">แก้ไขข้อมุล</button>
+  <button *ngIf="!isToogle" ion-button type="submit" (click)="navigateLocation()">รับเส้นทาง</button>
+
+  <button *ngIf="!isToogle" color="secondary" ion-button type="submit" (click)="goToResult()" >ประวัติการตรวจ</button>
+      
+</ion-content> 
+
+
+<!-- 
+<ion-content padding>
+
+<table>
+  
+    <td> {{item.name}}</td>
+
+</table>
+  
+</ion-content> -->
