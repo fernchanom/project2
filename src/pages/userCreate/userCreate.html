@@ -1,0 +1,44 @@
+<ion-header>
+
+  <ion-navbar color="bluebar">
+    <!-- <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button> -->
+    <ion-title>เพิ่มบัญชีผู้ใช้</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+	<form (ngSubmit)="save()">
+		<!-- fname -->
+		<ion-item>
+	    <ion-label floating>ชื่อ</ion-label>
+	    <ion-input [(ngModel)]="user.Firstname" type="text" name="Firstname" required></ion-input>
+	  </ion-item>
+
+	  <!-- lname -->
+	  <ion-item>
+	    <ion-label floating>นามสกุล</ion-label>
+	    <ion-input [(ngModel)]="user.Lastname" type="text" name="Lastname" required></ion-input>
+	  </ion-item>
+
+	  <!-- username -->
+	  <ion-item>
+	    <ion-label floating>Username</ion-label>
+	    <ion-input [(ngModel)]="user.Username" type="text" name="Username" required></ion-input>
+	  </ion-item>
+
+	  <!-- password -->
+	  <ion-item>
+	    <ion-label floating>Password</ion-label>
+	    <ion-input [(ngModel)]="user.Password" type="password" name="Password" required></ion-input>
+	  </ion-item>
+
+	  <div padding>
+	    <button ion-button type="submit">เพิ่ม</button>
+	  </div>
+	</form>
+
+</ion-content>

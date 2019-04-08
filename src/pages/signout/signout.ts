@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
+import { Storage } from '@ionic/storage';
 
 
 @IonicPage()
@@ -13,6 +14,7 @@ export class SignoutPage {
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
+    public storage: Storage,
     private alertCtrl: AlertController) {
   }
 
@@ -36,8 +38,8 @@ export class SignoutPage {
         {
           text: 'ใช่',
           handler: () => {
-            console.log('logout');
-            //this.navCtrl.push(LoginPage);
+            this.storage.set('user', null);
+            this.navCtrl.push(LoginPage);
 
           }
         }
@@ -52,5 +54,5 @@ export class SignoutPage {
 
 
 
-  
+
 }

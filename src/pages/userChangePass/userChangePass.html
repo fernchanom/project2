@@ -1,0 +1,38 @@
+<ion-header>
+
+  <ion-navbar color="bluebar">
+    <!-- <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button> -->
+    <ion-title>เพิ่มบัญชีผู้ใช้</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+	<form (ngSubmit)="save()">
+		<!-- old password -->
+		<ion-item>
+	    <ion-label floating>รหัสผ่านเดิม</ion-label>
+	    <ion-input [(ngModel)]="password.oldPass" type="password" name="oldPass" required></ion-input>
+	  </ion-item>
+
+	  <!-- new password -->
+	  <ion-item>
+	    <ion-label floating>รหัสผ่านใหม่</ion-label>
+	    <ion-input [(ngModel)]="password.newPass" type="password" name="newPass" required></ion-input>
+	  </ion-item>
+
+	  <!-- confirm new password -->
+	  <ion-item>
+	    <ion-label floating>ยืนยันรหัสผ่านใหม่</ion-label>
+	    <ion-input [(ngModel)]="password.confirmPass" type="password" name="confirmPass" required></ion-input>
+	  </ion-item>
+
+	  <div padding>
+	    <button ion-button type="submit">บันทึก</button>
+	  </div>
+	</form>
+
+</ion-content>

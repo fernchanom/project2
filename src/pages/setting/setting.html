@@ -12,20 +12,19 @@
 
 <ion-content padding>
   <br>
-  <h4>ชื่อผู้ใช้ : </h4>
+  <h4>ชื่อผู้ใช้ : {{user.Firstname}} {{user.Lastname}}</h4>
 
   <br>
-  <button ion-button block color=green secondary medium>เปลี่ยนชื่อผู้ใช้</button>
-
-
-  <br>
-  <button ion-button block color=yellow secondary medium>เปลี่ยนรหัสผ่าน</button>
+  <button ion-button block color=green secondary medium (click)="goToUserEditPage()">เปลี่ยนชื่อผู้ใช้</button>
 
   <br>
-  <button ion-button block color=bluebar secondary medium>เพิ่มบัญชีผู้ใช้</button>
+  <button ion-button block color=yellow secondary medium (click)="goToUserChangePassPage()">เปลี่ยนรหัสผ่าน</button>
 
   <br>
-  <button ion-button block color=red secondary medium>ลบบัญชีผู้ใช้</button>
+  <button ion-button block color=bluebar secondary medium (click)="goToUserCreatePage()">เพิ่มบัญชีผู้ใช้</button>
+
+  <br>
+  <button ion-button block color=red secondary medium (click)="delete()">ลบบัญชีผู้ใช้</button>
 
 
 </ion-content>

@@ -24,113 +24,76 @@ import { AlertController } from 'ionic-angular';
   templateUrl: 'login.html',
 })
 export class LoginPage {
-  itemsRef: AngularFireList<any>;
-  items: Observable<any[]>;
+  itemsRef: AngularFireList < any > ;
+  items: Observable < any[] > ;
   username: String;
   password: String;
 
-  constructor(
-    private af: AngularFireDatabase,
-    public navCtrl: NavController, 
-    public navParams: NavParams,
-    public storage: Storage,
-    private alertCtrl: AlertController){
+  constructor(private af: AngularFireDatabase, public navCtrl: NavController, public navParams: NavParams, public storage: Storage, private alertCtrl: AlertController) {
   }
 
-
-  public myPerson = {Username : String, Password : String};
-  
+  public myPerson = [];
 
   ionViewDidLoad() {
-    
     const personRef: firebase.database.Reference = firebase.database().ref("/User");
     personRef.on('value', personSnapshot => {
-     
       this.myPerson = personSnapshot.val();
-      console.log(this.myPerson[1])
-      console.log(this.myPerson[1].Username)
-      //this.validateLogin()
     });
+
+    // this.af.list(`/User`).valueChanges().subscribe(d => {
+    //   this.myPerson = d;
+    //   console.log('test2: ', this.myPerson);
+    // });
   }
 
   showData() {
     this.itemsRef = this.af.list('/User');
     // Use snapshotChanges().map() to store the key
-    
+
     this.items = this.itemsRef.snapshotChanges().map(changes => {
       console.log(changes)
-      console.log("Log",this.items);
+      console.log("Log", this.items);
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
     });
     console.log("changes", this.items);
   }
 
-  validateLogin(){
+  validateLogin() {
+    let userPass = false;
 
-    let userPass = []
+    // Authenticate
+    if (this.username == null && this.password == null) {
+      let alert = this.alertCtrl.create({
+        title: 'ข้อมูลไม่ถูกต้อง',
+        subTitle: 'ชื่อผู้ใช้ หรือ รหัสผ่าน ของท่านไม่ถูกต้อง กรุณาเข้าสู่ระบบอีกครั้ง',
+        buttons: ['ตกลง']
+      });
+      alert.present();
+      return false;
+    }
 
+    // Loop for check user in database
     Object.keys(this.myPerson).forEach(key=> {
-      console.log("####", this.myPerson[key].Username);
-      // if (this.username != "" && this.password != "")
-      // {
-        if (this.username == this.myPerson[key].Username && this.password == this.myPerson[key].Password)
-        {
-          console.log("username :", this.username)
-          console.log("usernameData :", this.myPerson[key].Username)
-          console.log("Login Success");
-          // this.navCtrl.push(NotePage)
-
-          userPass.push(this.username , this.password);
-
-        }
-        // else
-        // {
-        //   console.log("username :", this.username)
-        //   console.log("usernameData :", this.myPerson[key].Username)
-        //   console.log("Login fail")  ;
-        //   //Alert here
-        //   // let alert = this.alertCtrl.create
-        //   //   ({
-        //   //     title: 'ข้อมูลไม่ถูกต้อง',
-        //   //     subTitle: 'Username หรือ Password ของท่านไม่ถูกต้อง กรุณาล็อคอินอีกครั้ง',
-        //   //     buttons: ['OK']
-        //   //   });
-        //   // alert.present();
-        // }
-       //}
-
+      console.log('this.myPerson[key] : ', this.myPerson[key], key);
+      if (this.myPerson[key].Username == this.username && this.myPerson[key].Password == this.password) {
+        this.storage.set('user_id', key);
+        this.storage.set('user', this.myPerson[key]);
+        this.navCtrl.push(NotePage);
+        userPass=true;
+      }
     });
-    // {{userPass}}
-    if (this.username == null && this.password == null)
-    {
-      //Alert here
-      let alert = this.alertCtrl.create
-        ({
-          title: 'ข้อมูลไม่ถูกต้อง',
-          subTitle: 'ชื่อผู้ใช้ หรือ รหัสผ่าน ของท่านไม่ถูกต้อง กรุณาเข้าสู่ระบบอีกครั้ง',
-          buttons: ['ตกลง']
-        });
+
+    // no user map database
+    if (!userPass) {
+      let alert = this.alertCtrl.create({
+        title: 'ข้อมูลไม่ถูกต้อง',
+        subTitle: 'ชื่อผู้ใช้ หรือ รหัสผ่าน ของท่านไม่ถูกต้อง กรุณาเข้าสู่ระบบอีกครั้ง',
+        buttons: ['ตกลง']
+      });
       alert.present();
     }
+  }
 
-    else if(userPass[0] == this.username  && userPass[1] == this.password)
-    {
-      this.navCtrl.push(NotePage)
-    }
-
-    else
-    {
-      //Alert here
-      let alert = this.alertCtrl.create
-        ({
-          title: 'ข้อมูลไม่ถูกต้อง',
-          subTitle: 'ชื่อผู้ใช้ หรือ รหัสผ่าน ของท่านไม่ถูกต้อง กรุณาเข้าสู่ระบบอีกครั้ง',
-          buttons: ['ตกลง']
-        });
-      alert.present();
-    }
-}
-  
 
 }
 //Zameawza0821807459

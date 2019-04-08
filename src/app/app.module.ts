@@ -1,29 +1,33 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
+import { BrowserModule }                            from '@angular/platform-browser';
+import { ErrorHandler, NgModule }                   from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-import { Geolocation } from '@ionic-native/geolocation';
-import { LaunchNavigator } from '@ionic-native/launch-navigator';
+import { Geolocation }                              from '@ionic-native/geolocation';
+import { LaunchNavigator }                          from '@ionic-native/launch-navigator';
 
-import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
-//import { ListPage } from '../pages/list/list';
-import { SearchpatientPage } from '../pages/searchpatient/searchpatient';
-import { TypeofpatientPage } from '../pages/typeofpatient/typeofpatient';
-import { TodayPage } from '../pages/today/today';
-import { NextdayPage } from '../pages/nextday/nextday';
-import { SignoutPage } from '../pages/signout/signout';
-import { NotePage } from '../pages/note/note';
-//import { MapPage } from '../pages/map/map';
-import { PatientPage } from '../pages/patient/patient';
-import { DetailpatientPage } from '../pages/detailpatient/detailpatient';
-import { GeolocationPage } from '../pages/geolocation/geolocation';
-import { ResultPage } from '../pages/result/result';
-import { LoginPage } from '../pages/login/login';
-import { DetailcheckupPage } from '../pages/detailcheckup/detailcheckup';
-import { HightPage } from '../pages/hight/hight';
-import { MediumPage } from '../pages/medium/medium';
-import { LowPage } from '../pages/low/low';
-import { SettingPage } from '../pages/setting/setting';
+//import { ListPage }                               from '../pages/list/list';
+//import { MapPage }                                from '../pages/map/map';
+import { MyApp }                                    from './app.component';
+import { HomePage }                                 from '../pages/home/home';
+import { SearchpatientPage }                        from '../pages/searchpatient/searchpatient';
+import { TypeofpatientPage }                        from '../pages/typeofpatient/typeofpatient';
+import { TodayPage }                                from '../pages/today/today';
+import { NextdayPage }                              from '../pages/nextday/nextday';
+import { SignoutPage }                              from '../pages/signout/signout';
+import { NotePage }                                 from '../pages/note/note';
+import { PatientPage }                              from '../pages/patient/patient';
+import { DetailpatientPage }                        from '../pages/detailpatient/detailpatient';
+import { GeolocationPage }                          from '../pages/geolocation/geolocation';
+import { ResultPage }                               from '../pages/result/result';
+import { LoginPage }                                from '../pages/login/login';
+import { DetailcheckupPage }                        from '../pages/detailcheckup/detailcheckup';
+import { HightPage }                                from '../pages/hight/hight';
+import { MediumPage }                               from '../pages/medium/medium';
+import { LowPage }                                  from '../pages/low/low';
+import { SettingPage }                              from '../pages/setting/setting';
+import { UserEditPage }                             from '../pages/userEdit/userEdit';
+import { UserChangePassPage }                       from '../pages/userChangePass/userChangePass';
+import { UserCreatePage }                           from '../pages/userCreate/userCreate';
+
 
 
 
@@ -69,6 +73,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     MediumPage,
     LowPage,
     SettingPage,
+    UserEditPage,
+    UserChangePassPage,
+    UserCreatePage,
 
 
 
@@ -102,8 +109,12 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     MediumPage,
     LowPage,
     SettingPage,
+    UserEditPage,
+    UserChangePassPage,
+    UserCreatePage,
 
-    
+
+
 
 
   ],
