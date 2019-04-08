@@ -39,6 +39,7 @@ export class SignoutPage {
           text: 'ใช่',
           handler: () => {
             this.storage.set('user', null);
+            this.storage.set('user_id', null);
             this.navCtrl.push(LoginPage);
 
           }
