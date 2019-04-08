@@ -39,6 +39,9 @@ import 'rxjs/add/operator/map';
     
 
     isToogle:boolean = false;
+    topics: string[];
+    patient = [];
+    searchInput:boolean = false;
 
   constructor(
     private af: AngularFireDatabase,
@@ -47,26 +50,24 @@ import 'rxjs/add/operator/map';
     public storage: Storage)
     {
       //  this.initializeItems();    
-              
     }
   ionViewWillEnter() {
     this.showData();
   }
 
-
-
- //แสดงข้อมูลทั้งหมดจากฐานข้อมูล
+  //แสดงข้อมูลทั้งหมดจากฐานข้อมูล
   showData() {
-    this.itemsRef = this.af.list('/Patient');
+    this.itemsRef = this.af.list('/Patient/');
     // Use snapshotChanges().map() to store the key
     this.items = this.itemsRef.snapshotChanges().map(changes => {
       console.log(changes)
+      this.patient = changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
     });
   }
 
 
- //กําหนดค่าให้กับ input และเก็บ key 
+  //กําหนดค่าให้กับ input และเก็บ key 
   select(item) {
     //console.log(item);
     this.firstName = item.note.firstName;
@@ -81,113 +82,61 @@ import 'rxjs/add/operator/map';
     this.tel = item.note.tel;
     this.patient_id = item.note.patient_id;
     this.identification_number = item.note.identification_number;
-
-
     this.key = item.key;
 
   }
 
-
- //บันทึกข้อมูล
- save(note: any) {
+  //บันทึกข้อมูล
+  save(note: any) {
     //console.log(blog);
     this.itemsRef.push({note});
     this.isToogle = false;
-}
-
-
-//อัปเดตข้อมูลตาม key ที่ส่งมา
-update(note: any) {
-  if (this.key) {
-    this.itemsRef.update(this.key, {note});
-    this.isToogle = false;
   }
-}
 
+  //อัปเดตข้อมูลตาม key ที่ส่งมา
+  update(note: any) {
+    if (this.key) {
+      this.itemsRef.update(this.key, {note});
+      this.isToogle = false;
+    }
+  }
 
- //ลบข้อมูลตาม key ที่เลือก
- delete(item:any) {
+  //ลบข้อมูลตาม key ที่เลือก
+  delete(item:any) {
     this.itemsRef.remove(item.key);
     this.isToogle = false;
-}
+  }
 
  /*deleteAll() { //ลบทั้งหมด
  this.items.remove();
  this.isToogle = false;
  }*/
 
-
- //เป็น method ที่มีไว้ซ่อนหรือแสดงฟอร์ม
- openForm() {
-  this.isToogle = !this.isToogle;
-}
-
-
+  //เป็น method ที่มีไว้ซ่อนหรือแสดงฟอร์ม
+  openForm() {
+    this.isToogle = !this.isToogle;
+  }
 
   //แสดงข้อมูลคนไข้
-  goToDetailpatient() {
-    // firstName = firstName;
-    this.storage.set('firstName', this.firstName);
-    this.storage.set('lastName', this.lastName);
-    this.storage.set('dateOfBirth', this.dateOfBirth);
-    this.storage.set('age', this.age);
-    this.storage.set('bloodType', this.bloodType);
-    this.storage.set('medicalProblems', this.medicalProblems);
-    this.storage.set('riskType', this.riskType);
-    this.storage.set('address', this.address);
-    this.storage.set('tel', this.tel);
-    this.storage.set('patient_id', this.patient_id);
-    this.storage.set('identification_number', this.identification_number);
-    //radio
-    this.storage.set('sex', this.sex);
-  //   storage.get('name').then((val) => {
-  //   console.log('Your age is', val);
-  // });
-    this.navCtrl.push(DetailpatientPage);
+  goToDetailpatient(patient) {
+    // console.log("patient: ",patient);
+    this.navCtrl.push(DetailpatientPage,{patient: patient}); //ไปหน้า Detailpatient พร้อมส่งค่าตัวแปร patient
+  }
+
+  //-----------search-----------//   
+  search(ev: any) {
+    // this.generateTopics();
+    this.topics = this.patient;
+    this.searchInput = true;
+    let serVal = ev.target.value;
+    if (serVal && serVal.trim() != '') {
+        this.topics = this.patient.filter((topic) => {
+          // console.log(topic);
+        if ((topic.note.firstName.toLowerCase().indexOf(serVal.toLowerCase()) > -1) || (topic.note.patient_id.toLowerCase().indexOf(serVal.toLowerCase()) > -1)) {
+          return topic.note;
+        }
+      })
     }
-
-    
-    //-----------search-----------//
-    topics: string[];
- 
-    generateTopics() {
-      this.topics = [
-        // 'AAA',
-        // '111',
-        // 'กกก',
-        //item.note.firstName
-      ];
-    }
-   
-    getTopics(ev: any) {
-      this.generateTopics();
-      let serVal = ev.target.value;
-      if (serVal && serVal.trim() != '') {
-        this.topics = this.topics.filter((topic) => {
-          return (topic.toLowerCase().indexOf(serVal.toLowerCase()) > -1);
-        })
-      }
-    } 
-
-
-    //-----------search-----------//
-    // initializeItems() {
-    //   this.items = [
-        
-    //   ];
-    // }
-
-    // getItems(ev: any) {
-    //   this.initializeItems();
-
-    //   let val = ev.target.value;
-
-    //   if(val && val.trim() != '') {
-    //     this.items = this.items.filter((item) => {
-    //       return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
-    //     })
-    //   }
-    // }
-
+  } 
 
 }//end export class
