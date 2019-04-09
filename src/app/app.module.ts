@@ -27,11 +27,8 @@ import { SettingPage }                              from '../pages/setting/setti
 import { UserEditPage }                             from '../pages/userEdit/userEdit';
 import { UserChangePassPage }                       from '../pages/userChangePass/userChangePass';
 import { UserCreatePage }                           from '../pages/userCreate/userCreate';
-
-
-
-
-import { IonicStorageModule } from '@ionic/storage';
+import { Camera }                                   from '@ionic-native/camera';
+import { IonicStorageModule }                       from '@ionic/storage';
 
 //database
 import { AngularFireModule } from 'angularfire2';
@@ -76,9 +73,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     UserEditPage,
     UserChangePassPage,
     UserCreatePage,
-
-
-
   ],
   imports: [
     BrowserModule,
@@ -112,11 +106,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     UserEditPage,
     UserChangePassPage,
     UserCreatePage,
-
-
-
-
-
   ],
   providers: [
     StatusBar,
@@ -124,7 +113,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     AngularFireDatabase,
     Geolocation,
     LaunchNavigator,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    Camera
   ]
 })
 export class AppModule {}
