@@ -6,18 +6,18 @@
     </button>
     <ion-title>ข้อมูลคนไข้</ion-title>
   </ion-navbar>
-  
+
 </ion-header>
 
-<ion-content padding> 
-  <div *ngIf="!isToogle">   
+<ion-content padding>
+  <div *ngIf="!isToogle">
     <ion-item no-padding>ชื่อ : {{data.firstName}}</ion-item>
     <ion-item no-padding>นามสกุล : {{data.lastName}}</ion-item>
-    <ion-item no-padding>เพศ : {{data.sex}}</ion-item> 
+    <ion-item no-padding>เพศ : {{data.sex}}</ion-item>
     <ion-item no-padding>เลขประจำตัวคนไข้ : {{data.patient_id}}</ion-item>
     <ion-item no-padding>เลขประจำตัวประชาชน : {{data.identification_number}}</ion-item>
     <ion-item no-padding>วัน/เดือน/ปีเกิด : {{data.dateOfBirth}}</ion-item>
-    <ion-item no-padding>อายุ (ปี) : {{data.age}}</ion-item>  
+    <ion-item no-padding>อายุ (ปี) : {{data.age}}</ion-item>
     <ion-item no-padding>กรุ๊ปเลือด : {{data.bloodType}}</ion-item>
     <ion-card>
         <img center [src]="data.urlImg"/>
@@ -25,10 +25,10 @@
     <ion-item no-padding>โรคประจำตัว : {{data.medicalProblems}}</ion-item>
     <ion-item no-padding>ประเภทความเสี่ยง : {{data.riskType}}</ion-item>
     <ion-item no-padding>เบอร์โทรศัพท์ : {{data.tel}}</ion-item>
-    <ion-item no-padding>ที่อยู่ : {{data.address}}</ion-item>  
+    <ion-item no-padding>ที่อยู่ : {{data.address}}</ion-item>
   </div>
 
-  <div class="form">   
+  <div class="form">
     <form *ngIf="isToogle" novalidate #note="ngForm" (ngSubmit)="update()">
       <ion-list>
         <ion-item>
@@ -40,7 +40,7 @@
           <ion-label floating>นามสกุล</ion-label>
           <ion-input [(ngModel)]="data.lastName" type="text" name="lastName" required value="{{data.lastName}}"></ion-input>
         </ion-item>
-        
+
         <br>
         <ion-item><tr>เพศ</tr> </ion-item>
           <ion-list radio-group [(ngModel)]="data.sex" name="sex">
@@ -52,7 +52,7 @@
                 <ion-label>หญิง</ion-label>
                 <ion-radio value="หญิง"></ion-radio>
               </ion-item>
-          </ion-list>      
+          </ion-list>
 
         <ion-item>
           <ion-label floating>เลขประจำตัวคนไข้</ion-label>
@@ -63,7 +63,7 @@
           <ion-label floating>เลขประจำตัวประชาชน</ion-label>
           <ion-input [(ngModel)]="data.identification_number" type="text" name="identification_number" required value="{{data.identification_number}}"></ion-input>
         </ion-item>
-        
+
         <ion-item>
           <ion-label floating>วัน/เดือน/ปีเกิด</ion-label>
           <ion-datetime [(ngModel)]="data.dateOfBirth" type="text" displayFormat="MM/DD/YYYY" name="dateOfBirth" required></ion-datetime>
@@ -86,9 +86,9 @@
 
         <br>
         <ion-item>
-          <tr>กรุ๊ปเลือด</tr> 
-        </ion-item>      
-          <ion-list radio-group [(ngModel)]="data.bloodType" name="bloodType"> 
+          <tr>กรุ๊ปเลือด</tr>
+        </ion-item>
+          <ion-list radio-group [(ngModel)]="data.bloodType" name="bloodType">
             <ion-item>
               <ion-label>A</ion-label>
               <ion-radio value="A" checked="true"></ion-radio>
@@ -105,7 +105,7 @@
               <ion-label>AB</ion-label>
               <ion-radio value="AB"></ion-radio>
             </ion-item>
-          </ion-list>    
+          </ion-list>
 
         <ion-item>
           <ion-label floating>โรคประจำตัว</ion-label>
@@ -114,7 +114,7 @@
 
         <br>
         <ion-item>
-          <tr>ประเภทความเสี่ยง</tr> 
+          <tr>ประเภทความเสี่ยง</tr>
         </ion-item>
           <ion-list radio-group [(ngModel)]="data.riskType" name="riskType">
             <ion-item>
@@ -129,7 +129,7 @@
               <ion-label>ต่ำ</ion-label>
               <ion-radio value="ต่ำ"></ion-radio>
             </ion-item>
-          </ion-list>       
+          </ion-list>
 
         <ion-item>
           <ion-label floating>ที่อยู่</ion-label>
@@ -144,7 +144,7 @@
         <div padding>
           <button ion-button type="submit" [disabled]="!note.form.valid">บันทึก</button>
         </div>
-    
+
       </ion-list>
     </form>
   </div>
@@ -154,17 +154,17 @@
   <button *ngIf="!isToogle" ion-button type="submit" (click)="navigateLocation()">รับเส้นทาง</button>
 
   <button *ngIf="!isToogle" color="secondary" ion-button type="submit" (click)="goToResult()" >ประวัติการตรวจ</button>
-      
-</ion-content> 
+
+</ion-content>
 
 
-<!-- 
+<!--
 <ion-content padding>
 
 <table>
-  
+
     <td> {{item.name}}</td>
 
 </table>
-  
+
 </ion-content> -->

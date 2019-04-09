@@ -1,90 +1,59 @@
 <ion-header>
-
   <ion-navbar color="bluebar">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>ประวัติการตรวจ</ion-title>
-
     <ion-buttons end>
       <button ion-button icon-only color="royal" (click)="openFormResult()">
         <ion-icon name="add-circle"></ion-icon>
       </button>
     </ion-buttons>
-
   </ion-navbar>
-
 </ion-header>
-
-
 <ion-content padding>
-
-
   <form *ngIf="isToogle" novalidate #result="ngForm" (ngSubmit)="save(result.value)">
     <ion-list>
-    
-    <ion-item>
-      <ion-label floating>วัน/เดือน/ปีที่ตรวจ</ion-label>
-      <ion-datetime [(ngModel)]="datecheckup" type="text" displayFormat="MM/DD/YYYY" 
-        name="datecheckup" required></ion-datetime>
-    </ion-item>
-
-    <ion-item>
-      <ion-label floating>อาการ</ion-label>
-      <ion-input [(ngModel)]="sick" type="text" name="sick" required></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label floating>วัน/เดือน/ปีที่ตรวจครั้งถัดไป</ion-label>
-      <ion-datetime [(ngModel)]="nextdate_checkup" type="text" displayFormat="MM/DD/YYYY" 
-        name="nextdate_checkup" required></ion-datetime>
-    </ion-item>
-
-    
-
-    
-    <div padding>
+      <ion-item>
+        <ion-label floating>วัน/เดือน/ปีที่ตรวจ</ion-label>
+        <ion-datetime [(ngModel)]="datecheckup" type="text" displayFormat="MM/DD/YYYY" name="datecheckup" required></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>อาการ</ion-label>
+        <ion-input [(ngModel)]="sick" type="text" name="sick" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>วัน/เดือน/ปีที่ตรวจครั้งถัดไป</ion-label>
+        <ion-datetime [(ngModel)]="nextdate_checkup" type="text" displayFormat="MM/DD/YYYY" name="nextdate_checkup" required></ion-datetime>
+      </ion-item>
+      <div padding>
         <button ion-button type="submit" [disabled]="!result.form.valid">เพิ่ม</button>
-        <!-- <button ion-button type="button" color="secondary" 
+        <!-- <button ion-button type="button" color="secondary"
         [disabled]="!result.form.valid" (click)="update(result.value)">แก้ไข</button> -->
-  
-      <!-- <button ion-button type="submit" [disabled]="!result.form.valid">เพิ่ม</button>
+        <!-- <button ion-button type="submit" [disabled]="!result.form.valid">เพิ่ม</button>
       <button ion-button type="button" [disabled]="!result.form.valid" (click)="update(result.value)">แก้ไข</button> -->
-    </div>
-
-  </ion-list>
+      </div>
+    </ion-list>
   </form>
-
-
-    <!------------------- show -------------------->
-    <ion-list>
-        <ion-item-sliding *ngFor="let item of items | async" (click)="select(item)" >
-
-            <!-- <ion-item-options side="left">
+  <!------------------- show -------------------->
+  <ion-list>
+    <ion-item-sliding *ngFor="let item of items | async" (click)="select(item)">
+      <!-- <ion-item-options side="left">
                 <button color="bluebar" ion-button  (click)="goToDetailcheckup()">
                  <ion-icon name="seeMore"></ion-icon>
                  แสดงข้อมูล
                 </button>
              </ion-item-options> -->
-
-            <ion-item (click)="goToDetailcheckup()">
-              <h3>{{item.result.datecheckup}}</h3>
-              <p>{{item.result.sick}}</p>
-
-            </ion-item>
-              
-            <ion-item-options side="right">
-              <button ion-button color="danger" (click)="delete(item)">
-              <ion-icon name="trash"></ion-icon>
-              ลบข้อมูล
-              </button>
-            </ion-item-options>
-
-        </ion-item-sliding>
-    </ion-list>
-
-
-    
-
-</ion-content> 
-
+      <ion-item (click)="goToDetailcheckup()" *ngIf="item.result.patient_key==patient_id_">
+        <h3>{{item.result.datecheckup}}</h3>
+        <p>{{item.result.sick}}</p>
+      </ion-item>
+      <ion-item-options side="right">
+        <button ion-button color="danger" (click)="delete(item)">
+          <ion-icon name="trash"></ion-icon>
+          ลบข้อมูล
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>
