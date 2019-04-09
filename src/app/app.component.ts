@@ -45,7 +45,7 @@ export class MyApp {
     public storage: Storage) {
     this.initializeApp();
 
-    // ตรวจสอบการ login
+    // ตรวจสอบการ login TEST
     this.storage.get('user_id').then((val) => {
 
       console.log('val',val);
