@@ -52,6 +52,7 @@ export class HightPage {
 		          .then(snapshot => snapshot.val())
 		          .then((data) => {
 		          	this.patient = Object.keys(data).map(function(index){
+									data[index].key = index
 						    	return data[index];
 								});
 		          });
