@@ -12,6 +12,7 @@ import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
   templateUrl: 'userCreate.html',
 })
 export class UserCreatePage {
+  // test commit
   user = {
     Username: null,
     Password: null,
