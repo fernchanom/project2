@@ -111,31 +111,39 @@ import firebase from 'firebase';
 
   //บันทึกข้อมูล
   save() {
-    this.uploadImg().then(urlImg => {
-      console.log('this.urlImg1:',urlImg);
-      if (urlImg) {
-        this.data.urlImg = urlImg;
-        // console.log('this.data:',this.data);
-        this.itemsRef.push(this.data);
-        this.isToogle = false;
-        this.uploadAlert();
+    if (!this.captureDataUrl) {
+      console.log('not img');
+      this.itemsRef.push(this.data);
+      this.uploadAlert();
+    }else {
+      console.log('img');
+      this.uploadImg().then(urlImg => {
+        console.log('this.urlImg1:',urlImg);
+        if (urlImg) {
+          this.data.urlImg = urlImg;
+          // console.log('this.data:',this.data);
+          this.itemsRef.push(this.data);
+          this.uploadAlert();
+        }
+      });
+    }
 
-        // clear input
-        this.firstName = null;
-        this.lastName = null;
-        this.sex = null;
-        this.dateOfBirth = null;
-        this.age = null;
-        this.bloodType = null;
-        this.medicalProblems = null;
-        this.riskType = null;
-        this.address = null;
-        this.tel = null;
-        this.patient_id = null;
-        this.identification_number = null;
-        this.key = null;
-      }
-    });
+    this.isToogle = false;
+    
+    // clear input
+    this.firstName = null;
+    this.lastName = null;
+    this.sex = null;
+    this.dateOfBirth = null;
+    this.age = null;
+    this.bloodType = null;
+    this.medicalProblems = null;
+    this.riskType = null;
+    this.address = null;
+    this.tel = null;
+    this.patient_id = null;
+    this.identification_number = null;
+    this.key = null;
   }
 
   //ลบข้อมูลตาม key ที่เลือก
