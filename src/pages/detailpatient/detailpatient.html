@@ -19,7 +19,7 @@
     <ion-item no-padding>วัน/เดือน/ปีเกิด : {{data.dateOfBirth}}</ion-item>
     <ion-item no-padding>อายุ (ปี) : {{data.age}}</ion-item>
     <ion-item no-padding>กรุ๊ปเลือด : {{data.bloodType}}</ion-item>
-    <ion-card>
+    <ion-card *ngIf="data.urlImg">
         <img center [src]="data.urlImg"/>
     </ion-card>
     <ion-item no-padding>โรคประจำตัว : {{data.medicalProblems}}</ion-item>

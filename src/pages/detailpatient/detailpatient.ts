@@ -130,7 +130,8 @@ export class DetailpatientPage {
       start:[this.latitude,this.longitude],
       app: this.launchNavigator.APP.GOOGLE_MAPS
     };
-    this.launchNavigator.navigate(this.data.address+', ON', options)
+    let destination = [this.patient.latitude, this.patient.longitude];
+    this.launchNavigator.navigate(destination, options)
     // this.launchNavigator.navigate('Robinson Sriracha, ON', options)
     .then(success =>{
       console.log(success);
