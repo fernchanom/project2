@@ -14,17 +14,16 @@ import 'rxjs/add/operator/map';
   templateUrl: 'detailcheckup.html',
 })
 export class DetailcheckupPage {
-  datecheckup_:string;
-  sick_:string;
-  nextdate_checkup_:string;
+  datecheckup_: string;
+  sick_: string;
+  nextdate_checkup_: string;
   // send_id:string;
 
   constructor(private af: AngularFireDatabase,
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     private platform: Platform,
-    public storage: Storage) {
-  }
+    public storage: Storage) {}
 
   ionViewDidLoad() {
     this.storage.get('datecheckup').then((val) => {
@@ -36,6 +35,10 @@ export class DetailcheckupPage {
     this.storage.get('nextdate_checkup').then((val) => {
       this.nextdate_checkup_ = val
     })
+
+    console.log('datecheckup :', this.datecheckup_);
+    console.log('sick :', this.sick_);
+    console.log('nextdate_checkup :', this.nextdate_checkup_);
     // this.storage.get('patient_id_').then((val) => {
     //   this.send_id = val
     // })

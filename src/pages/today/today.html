@@ -17,16 +17,16 @@
 
 
 <ion-content padding>
-
+  <form novalidate #result="ngForm" (ngSubmit)="search(result.value)">
     <ion-item>
         <ion-label>เลือกวันที่ต้องการ</ion-label>
-        <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="myDate"></ion-datetime>
+        <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="date" name="date"></ion-datetime>
     </ion-item>
 
     <br>
-    <button ion-button block color=bluebar secondary medium>ตกลง</button>
+    <button ion-button block color=bluebar secondary medium [disabled]="!result.form.valid">ตกลง</button>
+  </form>
 
 
-    
 
 </ion-content>

@@ -4,7 +4,7 @@ import firebase from 'firebase';
 import { DetailpatientPage } from '../detailpatient/detailpatient';
 
 /**
- * Generated class for the LowPage page.
+ * Generated class for the DetailNextdayPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -12,10 +12,12 @@ import { DetailpatientPage } from '../detailpatient/detailpatient';
 
 @IonicPage()
 @Component({
-  selector: 'page-low',
-  templateUrl: 'low.html',
+  selector: 'page-detailnextday',
+  templateUrl: 'detailnextday.html',
 })
-export class LowPage {
+export class DetailNextdayPage {
+	date = null;
+  patient_keys = [];
   patient = [];
   key: string = null;
   firstName: string = null;
@@ -48,17 +50,44 @@ export class LowPage {
   };
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    const requestRef = firebase.database().ref('/Patient/');
-    requestRef.orderByChild('riskType')
-      .equalTo('ต่ำ')
+  	this.date = this.navParams.get('date');
+
+
+    // query ข้อมูล Medicalcheckup จาก nextdate_checkup
+    const MedicalRef = firebase.database().ref('/Medicalcheckup/');
+    MedicalRef
+      .orderByChild('nextdate_checkup')
+      .equalTo(this.date)
       .once('value')
       .then(snapshot => snapshot.val())
       .then((data) => {
-        this.patient = Object.keys(data).map(function(index) {
-          data[index].key = index
-          return data[index];
-        });
+        if (data) {
+          const patientIDs = Object.keys(data).map(function(index) {
+            console.log('data[index]', data[index]);
+            return data[index].patient_key;
+          });
+
+            // query ข้อมูล Patient ที่มี PatientID ตรงกัน
+            const requestRef = firebase.database().ref('/Patient/');
+            requestRef
+              .once('value')
+              .then(snapshot => snapshot.val())
+              .then((data) => {
+                this.patient = Object.keys(data).map(function(index) {
+                  // console.log("index:", index);
+                  console.log('data: ', patientIDs);
+                  if (patientIDs.find(arr=>arr==index)) {
+                    data[index].key = index
+                    return data[index];
+                  }
+                }).filter(arr=>arr);
+                console.log("patient:", this.patient);
+              });
+        }
+
       });
+
+
   }
 
   //กําหนดค่าให้กับ input และเก็บ key
@@ -86,7 +115,6 @@ export class LowPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad LowPage');
   }
 
 }

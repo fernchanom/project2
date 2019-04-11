@@ -24,10 +24,10 @@ export class TypeofpatientPage {
   note;
   firstName;
 
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
     public navParams: NavParams,
-    public afd : AngularFireDatabase) {
-      // this.goToHight();
+    public afd: AngularFireDatabase) {
+    // this.goToHight();
   }
 
   ionViewDidLoad() {
@@ -42,7 +42,7 @@ export class TypeofpatientPage {
     //     console.log(data)
     //     this.items = data
     //   }
-    // }  
+    // }
 
   }
 

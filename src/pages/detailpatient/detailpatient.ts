@@ -62,13 +62,13 @@ export class DetailpatientPage {
   key:string;
   isToogle:boolean = false;
   captureDataUrl: string = null;
- 
- 
+
+
   constructor(private af: AngularFireDatabase,
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
-    public geolocation: Geolocation, 
-    private launchNavigator:LaunchNavigator, 
+    public geolocation: Geolocation,
+    private launchNavigator:LaunchNavigator,
     private platform: Platform,
     public storage: Storage,
     public alertCtrl: AlertController,
@@ -97,19 +97,19 @@ export class DetailpatientPage {
     // this.sex = this.patient.sex;
     // this.urlImg = this.patient.urlImg;
     this.data = {
-      firstName : this.patient.firstName,
-      lastName : this.patient.lastName,
-      sex : this.patient.sex,
-      dateOfBirth : this.patient.dateOfBirth,
-      age : this.patient.age,
-      bloodType : this.patient.bloodType,
-      medicalProblems : this.patient.medicalProblems,
-      riskType : this.patient.riskType,
-      address : this.patient.address,
-      tel : this.patient.tel,
-      patient_id : this.patient.patient_id,
+      firstName             : this.patient.firstName,
+      lastName              : this.patient.lastName,
+      sex                   : this.patient.sex,
+      dateOfBirth           : this.patient.dateOfBirth,
+      age                   : this.patient.age,
+      bloodType             : this.patient.bloodType,
+      medicalProblems       : this.patient.medicalProblems,
+      riskType              : this.patient.riskType,
+      address               : this.patient.address,
+      tel                   : this.patient.tel,
+      patient_id            : this.patient.patient_id,
       identification_number : this.patient.identification_number,
-      urlImg : this.patient.urlImg
+      urlImg                : this.patient.urlImg
     };
 
     //---------------------   google map   ------------------------//
@@ -141,10 +141,11 @@ export class DetailpatientPage {
   }
   //--------------------- end  google map   ------------------------//
 
-  goToResult() {
-    this.storage.set('patient_id_',this.data.patient_id);
-
-    this.navCtrl.push(ResultPage);
+  async goToResult() {
+    await this.storage.set('patient_id_',this.key).then(val => {
+      console.log('session: ', val);
+      this.navCtrl.push(ResultPage);
+    });
   }
 
   editPatient() {
@@ -200,7 +201,7 @@ export class DetailpatientPage {
               resolve (imageRef.getDownloadURL());
           console.log("DATA_URL:",imageRef.getDownloadURL());
       });
-    });    
+    });
   }
 
   uploadAlert() {
@@ -219,7 +220,7 @@ export class DetailpatientPage {
     alert.present();
     // clear the previous photo data in the variable
     this.captureDataUrl = "";
-  }  
+  }
 
 }
 

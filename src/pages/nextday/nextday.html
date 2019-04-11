@@ -5,27 +5,20 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar color="bluebar">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>การตรวจครั้งถัดไป</ion-title>
   </ion-navbar>
-
 </ion-header>
-
-
 <ion-content padding>
-
+  <form novalidate #result="ngForm" (ngSubmit)="search(result.value)">
     <ion-item>
-        <ion-label>เลือกวันที่ต้องการ</ion-label>
-        <ion-datetime displayFormat="DD/MM/YYYY" min="2019" max="2030-10-31" [(ngModel)]="myDate"></ion-datetime>
-    </ion-item> 
-    
+      <ion-label>เลือกวันที่ต้องการ</ion-label>
+      <ion-datetime displayFormat="DD/MM/YYYY" min="2019" max="2030-10-31" [(ngModel)]="date" name="date"></ion-datetime>
+    </ion-item>
     <br>
-    <button ion-button block color=bluebar secondary medium>ตกลง</button>
-
-
-    
+    <button ion-button block color=bluebar secondary medium [disabled]="!result.form.valid">ตกลง</button>
+  </form>
 </ion-content>

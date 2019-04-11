@@ -27,6 +27,8 @@ import { SettingPage }                              from '../pages/setting/setti
 import { UserEditPage }                             from '../pages/userEdit/userEdit';
 import { UserChangePassPage }                       from '../pages/userChangePass/userChangePass';
 import { UserCreatePage }                           from '../pages/userCreate/userCreate';
+import { DetailNextdayPage }                        from '../pages/detailnextday/detailnextday';
+import { DetailTodayPage }                          from '../pages/detailtoday/detailtoday';
 import { Camera }                                   from '@ionic-native/camera';
 import { IonicStorageModule }                       from '@ionic/storage';
 
@@ -73,6 +75,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     UserEditPage,
     UserChangePassPage,
     UserCreatePage,
+    DetailNextdayPage,
+    DetailTodayPage,
   ],
   imports: [
     BrowserModule,
@@ -106,6 +110,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     UserEditPage,
     UserChangePassPage,
     UserCreatePage,
+    DetailNextdayPage,
+    DetailTodayPage,
   ],
   providers: [
     StatusBar,
