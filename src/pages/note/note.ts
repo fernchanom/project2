@@ -12,6 +12,7 @@ import 'rxjs/add/operator/map';
 import { AlertController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import firebase from 'firebase';
+import { Geolocation } from '@ionic-native/geolocation';
 
 
 
@@ -47,6 +48,8 @@ import firebase from 'firebase';
       medicalProblems : null,
       riskType : null,
       address : null,
+      latitude : null,
+      longitude : null,
       tel : null,
       patient_id : null,
       identification_number : null,
@@ -70,9 +73,10 @@ import firebase from 'firebase';
     public storage: Storage,
     // private afStorage: AngularFireStorage,
     private alertCtrl: AlertController,
-    private camera: Camera)
+    private camera: Camera,
+    private geolocation: Geolocation)
     {
-      //  this.initializeItems();    
+      //  this.initializeItems();  
     }
   ionViewWillEnter() {
     this.showData();
@@ -107,6 +111,39 @@ import firebase from 'firebase';
     this.identification_number = item.identification_number;
     this.key = item.key;
 
+  }
+
+ /*deleteAll() { //ลบทั้งหมด
+ this.items.remove();
+ this.isToogle = false;
+ }*/
+
+  //เป็น method ที่มีไว้ซ่อนหรือแสดงฟอร์ม
+  openForm() {
+    this.isToogle = !this.isToogle;
+
+    // clear input
+    this.firstName = null;
+    this.lastName = null;
+    this.sex = null;
+    this.dateOfBirth = null;
+    this.age = null;
+    this.bloodType = null;
+    this.medicalProblems = null;
+    this.riskType = null;
+    this.address = null;
+    this.tel = null;
+    this.patient_id = null;
+    this.identification_number = null;
+    this.key = null;
+
+    this.geolocation.getCurrentPosition().then((resp) => {
+     console.log("lat long:", resp.coords.latitude, " : ", resp.coords.longitude);
+     this.data.latitude = resp.coords.latitude;
+     this.data.longitude = resp.coords.longitude;
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });  
   }
 
   //บันทึกข้อมูล
@@ -150,31 +187,6 @@ import firebase from 'firebase';
   delete(item:any) {
     this.itemsRef.remove(item.key);
     this.isToogle = false;
-  }
-
- /*deleteAll() { //ลบทั้งหมด
- this.items.remove();
- this.isToogle = false;
- }*/
-
-  //เป็น method ที่มีไว้ซ่อนหรือแสดงฟอร์ม
-  openForm() {
-    this.isToogle = !this.isToogle;
-
-    // clear input
-    this.firstName = null;
-    this.lastName = null;
-    this.sex = null;
-    this.dateOfBirth = null;
-    this.age = null;
-    this.bloodType = null;
-    this.medicalProblems = null;
-    this.riskType = null;
-    this.address = null;
-    this.tel = null;
-    this.patient_id = null;
-    this.identification_number = null;
-    this.key = null;
   }
 
   //แสดงข้อมูลคนไข้
