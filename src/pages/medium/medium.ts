@@ -16,55 +16,54 @@ import { DetailpatientPage } from '../detailpatient/detailpatient';
   templateUrl: 'medium.html',
 })
 export class MediumPage {
-    patient = [];
-    key:string = null;
-    firstName:string = null;
-    lastName:string = null;
-    sex:string = null;
-    dateOfBirth:string = null;
-    age:string = null;
-    bloodType:string = null;
-    medicalProblems:string = null;
-    riskType:string = null;
-    address:string = null;
-    tel:string = null;
-    patient_id:string = null;
-    identification_number:string = null;
-    captureDataUrl: string = null;
-    data = {
-      firstName : null,
-      lastName : null,
-      sex : null,
-      dateOfBirth : null,
-      age : null,
-      bloodType : null,
-      medicalProblems : null,
-      riskType : null,
-      address : null,
-      tel : null,
-      patient_id : null,
-      identification_number : null,
-      urlImg : null
-    };
+  patient = [];
+  key: string = null;
+  firstName: string = null;
+  lastName: string = null;
+  sex: string = null;
+  dateOfBirth: string = null;
+  age: string = null;
+  bloodType: string = null;
+  medicalProblems: string = null;
+  riskType: string = null;
+  address: string = null;
+  tel: string = null;
+  patient_id: string = null;
+  identification_number: string = null;
+  captureDataUrl: string = null;
+  data = {
+    firstName: null,
+    lastName: null,
+    sex: null,
+    dateOfBirth: null,
+    age: null,
+    bloodType: null,
+    medicalProblems: null,
+    riskType: null,
+    address: null,
+    tel: null,
+    patient_id: null,
+    identification_number: null,
+    urlImg: null
+  };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) 
-  {
-		const requestRef = firebase.database().ref('/Patient/');
-		requestRef.orderByChild('riskType')
-		          .equalTo('ปานกลาง')
-		          .once('value')
-		          .then(snapshot => snapshot.val())
-		          .then((data) => {
-		          	this.patient = Object.keys(data).map(function(index){
-									console.log("index:",index);
-									data[index].key = index
-						    	return data[index];
-								});
-								console.log("patient:",this.patient);
-		          });
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
+    const requestRef = firebase.database().ref('/Patient/');
+    requestRef.orderByChild('riskType')
+      .equalTo('ปานกลาง')
+      .once('value')
+      .then(snapshot => snapshot.val())
+      .then((data) => {
+        this.patient = Object.keys(data).map(function(index) {
+          console.log("index:", index);
+          data[index].key = index
+          return data[index];
+        });
+        console.log("patient:", this.patient);
+      });
   }
 
-  //กําหนดค่าให้กับ input และเก็บ key 
+  //กําหนดค่าให้กับ input และเก็บ key
   select(item) {
     //console.log(item);
     this.firstName = item.firstName;
@@ -83,9 +82,9 @@ export class MediumPage {
   }
 
   //แสดงข้อมูลคนไข้
-  goToDetailpatient(key,patient) {
+  goToDetailpatient(key, patient) {
     // console.log("patient: ",patient);
-    this.navCtrl.push(DetailpatientPage,{key: key, patient: patient}); //ไปหน้า Detailpatient พร้อมส่งค่าตัวแปร key & patient
+    this.navCtrl.push(DetailpatientPage, { key: key, patient: patient }); //ไปหน้า Detailpatient พร้อมส่งค่าตัวแปร key & patient
   }
 
   ionViewDidLoad() {

@@ -44,9 +44,9 @@
                  แสดงข้อมูล
                 </button>
              </ion-item-options> -->
-      <ion-item (click)="goToDetailcheckup()" *ngIf="item.result.patient_key==patient_id_">
-        <h3>{{item.result.datecheckup}}</h3>
-        <p>{{item.result.sick}}</p>
+      <ion-item (click)="goToDetailcheckup()" *ngIf="item.patient_key==patient_id_">
+        <h3>{{item.datecheckup}}</h3>
+        <p>{{item.sick}}</p>
       </ion-item>
       <ion-item-options side="right">
         <button ion-button color="danger" (click)="delete(item)">

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -26,11 +26,20 @@ export class ResultPage {
 
   constructor(private af: AngularFireDatabase, public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {}
 
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad');
+    this.storage.get('patient_id_').then(val => {
+      this.patient_id_ = val;
+      console.log('patient_id_: ', val);
+    });
+    this.showData();
+  }
+
   ionViewWillEnter() {
     console.log('ionViewWillEnter');
     this.storage.get('patient_id_').then(val => {
       this.patient_id_ = val;
-      console.log('ID: ', val);
+      console.log('patient_id_: ', val);
     });
     this.showData();
   }
@@ -48,13 +57,12 @@ export class ResultPage {
 
   //กําหนดค่าให้กับ input และเก็บ key
   select(item) {
-    //console.log(item);
-    this.datecheckup = item.result.datecheckup;
-    this.sick = item.result.sick;
-    this.nextdate_checkup = item.result.nextdate_checkup;
-    this.patient_id_ = item.result.patient_id_;
-
-    this.key = item.key;
+    console.log('Item:', item);
+    this.datecheckup      = item.datecheckup;
+    this.sick             = item.sick;
+    this.nextdate_checkup = item.nextdate_checkup;
+    this.patient_id_      = item.patient_id_;
+    this.key              = item.key;
   }
 
   //บันทึกข้อมูล
@@ -62,7 +70,8 @@ export class ResultPage {
     await this.storage.get('patient_id_').then(val => {
       result.patient_key = val;
     });
-    this.itemsRef.push({ result });
+    console.log('result', result);
+    this.itemsRef.push(result);
     this.isToogle = false;
   }
 
@@ -72,7 +81,7 @@ export class ResultPage {
       await this.storage.get('patient_id_').then(val => {
         result.patient_key = val;
       });
-      this.itemsRef.update(this.key, { result });
+      this.itemsRef.update(this.key, result);
       this.isToogle = false;
     }
   }

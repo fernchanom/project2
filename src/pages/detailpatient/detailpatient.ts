@@ -142,10 +142,10 @@ export class DetailpatientPage {
   //--------------------- end  google map   ------------------------//
 
   async goToResult() {
-    console.log('Test');
-    await this.storage.set('patient_id_',this.key);
-    console.log('Session: ', this.key);
-    this.navCtrl.push(ResultPage);
+    await this.storage.set('patient_id_',this.key).then(val => {
+      console.log('session: ', val);
+      this.navCtrl.push(ResultPage);
+    });
   }
 
   editPatient() {
