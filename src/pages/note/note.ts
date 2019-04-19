@@ -12,6 +12,7 @@ import 'rxjs/add/operator/map';
 import { AlertController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import firebase from 'firebase';
+import { Geolocation } from '@ionic-native/geolocation';
 
 
 
@@ -47,6 +48,8 @@ import firebase from 'firebase';
       medicalProblems : null,
       riskType : null,
       address : null,
+      latitude : null,
+      longitude : null,
       tel : null,
       patient_id : null,
       identification_number : null,
@@ -55,7 +58,7 @@ import firebase from 'firebase';
 
     //-----------search-----------//
     // searchQuery:string;
-
+    
 
     isToogle:boolean = false;
     topics: string[];
@@ -70,9 +73,10 @@ import firebase from 'firebase';
     public storage: Storage,
     // private afStorage: AngularFireStorage,
     private alertCtrl: AlertController,
-    private camera: Camera)
+    private camera: Camera,
+    private geolocation: Geolocation)
     {
-      //  this.initializeItems();
+      //  this.initializeItems();  
     }
   ionViewWillEnter() {
     this.showData();
@@ -90,7 +94,7 @@ import firebase from 'firebase';
     });
   }
 
-  //กําหนดค่าให้กับ input และเก็บ key
+  //กําหนดค่าให้กับ input และเก็บ key 
   select(item) {
     //console.log(item);
     this.firstName = item.firstName;
@@ -107,49 +111,6 @@ import firebase from 'firebase';
     this.identification_number = item.identification_number;
     this.key = item.key;
 
-  }
-
-  //บันทึกข้อมูล
-  save() {
-    if (!this.captureDataUrl) {
-      console.log('not img');
-      this.itemsRef.push(this.data);
-      this.uploadAlert();
-    }else {
-      console.log('img');
-      this.uploadImg().then(urlImg => {
-        console.log('this.urlImg1:',urlImg);
-        if (urlImg) {
-          this.data.urlImg = urlImg;
-          // console.log('this.data:',this.data);
-          this.itemsRef.push(this.data);
-          this.uploadAlert();
-        }
-      });
-    }
-
-    this.isToogle = false;
-
-    // clear input
-    this.firstName = null;
-    this.lastName = null;
-    this.sex = null;
-    this.dateOfBirth = null;
-    this.age = null;
-    this.bloodType = null;
-    this.medicalProblems = null;
-    this.riskType = null;
-    this.address = null;
-    this.tel = null;
-    this.patient_id = null;
-    this.identification_number = null;
-    this.key = null;
-  }
-
-  //ลบข้อมูลตาม key ที่เลือก
-  delete(item:any) {
-    this.itemsRef.remove(item.key);
-    this.isToogle = false;
   }
 
  /*deleteAll() { //ลบทั้งหมด
@@ -175,6 +136,57 @@ import firebase from 'firebase';
     this.patient_id = null;
     this.identification_number = null;
     this.key = null;
+
+    this.geolocation.getCurrentPosition().then((resp) => {
+     console.log("lat long:", resp.coords.latitude, " : ", resp.coords.longitude);
+     this.data.latitude = resp.coords.latitude;
+     this.data.longitude = resp.coords.longitude;
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });  
+  }
+
+  //บันทึกข้อมูล
+  save() {
+    if (!this.captureDataUrl) {
+      console.log('not img');
+      this.itemsRef.push(this.data);
+      this.uploadAlert();
+    }else {
+      console.log('img');
+      this.uploadImg().then(urlImg => {
+        console.log('this.urlImg1:',urlImg);
+        if (urlImg) {
+          this.data.urlImg = urlImg;
+          // console.log('this.data:',this.data);
+          this.itemsRef.push(this.data);
+          this.uploadAlert();
+        }
+      });
+    }
+
+    this.isToogle = false;
+    
+    // clear input
+    this.firstName = null;
+    this.lastName = null;
+    this.sex = null;
+    this.dateOfBirth = null;
+    this.age = null;
+    this.bloodType = null;
+    this.medicalProblems = null;
+    this.riskType = null;
+    this.address = null;
+    this.tel = null;
+    this.patient_id = null;
+    this.identification_number = null;
+    this.key = null;
+  }
+
+  //ลบข้อมูลตาม key ที่เลือก
+  delete(item:any) {
+    this.itemsRef.remove(item.key);
+    this.isToogle = false;
   }
 
   //แสดงข้อมูลคนไข้
@@ -183,7 +195,7 @@ import firebase from 'firebase';
     this.navCtrl.push(DetailpatientPage,{key: key, patient: patient}); //ไปหน้า Detailpatient พร้อมส่งค่าตัวแปร key & patient
   }
 
-  //-----------search-----------//
+  //-----------search-----------//   
   search(ev: any) {
     // this.generateTopics();
     this.topics = this.patient;
@@ -215,7 +227,7 @@ import firebase from 'firebase';
     }, (err) => {
         console.log(err);
     });
-  }
+  } 
 
   uploadImg() {
     return new Promise<any>(resolve => {
@@ -235,7 +247,7 @@ import firebase from 'firebase';
       });
     });
 
-
+    
   }
 
   uploadAlert() {
@@ -254,6 +266,6 @@ import firebase from 'firebase';
     alert.present();
     // clear the previous photo data in the variable
     this.captureDataUrl = "";
-  }
+  }  
 
 }//end export class
