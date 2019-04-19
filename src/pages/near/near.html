@@ -1,0 +1,47 @@
+
+<ion-header>
+
+    <ion-navbar color="bluebar">
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+      <ion-title>ค้นหาคนไข้ใกล้เคียง</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <!-------------------------  search ---------------------------------->
+    <ion-searchbar *ngIf="!isToogle" (ionInput)="search($event)" [showCancelButton]="shouldShowCancel" (ionCancel)="onCancel($event)"></ion-searchbar>
+    <!-------------------------  end  search ---------------------------------->
+
+    <div *ngIf="!searchInput">
+      <ion-item-sliding *ngFor="let item of items | async">
+        <ion-item (click)="goToDetailpatient(item.key,item)">
+          <h3>{{item.firstName}} {{item.lastName}}</h3>
+          <p>เลขประจำตัวคนไข้ : {{item.patient_id}}</p>
+        </ion-item>
+
+        <ion-item-options side="right">
+          <button ion-button color="danger" (click)="delete(item)"><ion-icon name="trash"></ion-icon>ลบข้อมูล</button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </div>
+
+    <!-- ผลลัพธ์จากการ search -->
+    <div *ngIf="searchInput">
+      <ion-item-sliding *ngFor="let item of topics">
+        <ion-item (click)="goToDetailpatient(item.key,item)">
+          <h3>{{item.firstName}} {{item.lastName}}</h3>
+          <p>เลขประจำตัวคนไข้ : {{item.patient_id}}</p>
+        </ion-item>
+
+        <ion-item-options side="right">
+          <button ion-button color="danger" (click)="delete(item)"><ion-icon name="trash"></ion-icon>ลบข้อมูล</button>
+       </ion-item-options>
+      </ion-item-sliding>
+    </div>
+
+  </ion-list>
+</ion-content>

@@ -29,6 +29,7 @@ import { UserChangePassPage }                       from '../pages/userChangePas
 import { UserCreatePage }                           from '../pages/userCreate/userCreate';
 import { DetailNextdayPage }                        from '../pages/detailnextday/detailnextday';
 import { DetailTodayPage }                          from '../pages/detailtoday/detailtoday';
+import { NearPage }                                 from '../pages/near/near';
 import { Camera }                                   from '@ionic-native/camera';
 import { IonicStorageModule }                       from '@ionic/storage';
 
@@ -77,6 +78,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     UserCreatePage,
     DetailNextdayPage,
     DetailTodayPage,
+    NearPage,
   ],
   imports: [
     BrowserModule,
@@ -112,6 +114,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     UserCreatePage,
     DetailNextdayPage,
     DetailTodayPage,
+    NearPage,
   ],
   providers: [
     StatusBar,
