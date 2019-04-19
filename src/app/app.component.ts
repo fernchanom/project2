@@ -23,6 +23,7 @@ import { DetailcheckupPage }    from '../pages/detailcheckup/detailcheckup';
 import { HightPage }            from '../pages/hight/hight';
 import { SettingPage }          from '../pages/setting/setting';
 import { UserCreatePage }       from '../pages/userCreate/userCreate';
+import { NearPage }             from '../pages/near/near';
 
 
 
@@ -68,7 +69,8 @@ export class MyApp {
       { title: 'ประเภทคนไข้', component: TypeofpatientPage, icon: 'people'},
       { title: 'ผลการตรวจประจำวัน', component: TodayPage, icon: 'paper'},
       { title: 'การตรวจครั้งถัดไป', component: NextdayPage, icon: 'clipboard'},
-//      { title: 'แผนที่', component: MapPage, icon: 'navigate'},
+     { title: 'คนไข้ใกล้เคียง', component: NearPage, icon: 'navigate'},
+     // { title: 'แผนที่', component: MapPage, icon: 'navigate'},
 //      { title: 'แผนที่2', component: GeolocationPage, icon: 'navigate'},
       { title: 'ตั้งค่าบัญชีผู้ใช้', component: SettingPage, icon: 'settings'},
       { title: 'ออกจากระบบ', component: SignoutPage, icon: 'log-out'},

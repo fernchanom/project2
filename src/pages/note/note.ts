@@ -55,7 +55,7 @@ import firebase from 'firebase';
 
     //-----------search-----------//
     // searchQuery:string;
-    
+
 
     isToogle:boolean = false;
     topics: string[];
@@ -72,7 +72,7 @@ import firebase from 'firebase';
     private alertCtrl: AlertController,
     private camera: Camera)
     {
-      //  this.initializeItems();    
+      //  this.initializeItems();
     }
   ionViewWillEnter() {
     this.showData();
@@ -90,7 +90,7 @@ import firebase from 'firebase';
     });
   }
 
-  //กําหนดค่าให้กับ input และเก็บ key 
+  //กําหนดค่าให้กับ input และเก็บ key
   select(item) {
     //console.log(item);
     this.firstName = item.firstName;
@@ -129,7 +129,7 @@ import firebase from 'firebase';
     }
 
     this.isToogle = false;
-    
+
     // clear input
     this.firstName = null;
     this.lastName = null;
@@ -183,7 +183,7 @@ import firebase from 'firebase';
     this.navCtrl.push(DetailpatientPage,{key: key, patient: patient}); //ไปหน้า Detailpatient พร้อมส่งค่าตัวแปร key & patient
   }
 
-  //-----------search-----------//   
+  //-----------search-----------//
   search(ev: any) {
     // this.generateTopics();
     this.topics = this.patient;
@@ -215,7 +215,7 @@ import firebase from 'firebase';
     }, (err) => {
         console.log(err);
     });
-  } 
+  }
 
   uploadImg() {
     return new Promise<any>(resolve => {
@@ -235,7 +235,7 @@ import firebase from 'firebase';
       });
     });
 
-    
+
   }
 
   uploadAlert() {
@@ -254,6 +254,6 @@ import firebase from 'firebase';
     alert.present();
     // clear the previous photo data in the variable
     this.captureDataUrl = "";
-  }  
+  }
 
 }//end export class
