@@ -13,6 +13,7 @@ import { AlertController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import firebase from 'firebase';
 import { Geolocation } from '@ionic-native/geolocation';
+import { LoadingController } from 'ionic-angular';
 
 
 
@@ -47,15 +48,16 @@ import { Geolocation } from '@ionic-native/geolocation';
       bloodType : null,
       medicalProblems : null,
       riskType : null,
-      address : null,
+      cur_address : null,
       latitude : null,
       longitude : null,
+      address : null,
       tel : null,
       patient_id : null,
       identification_number : null,
       urlImg : null
     };
-
+    cur_address:boolean = false;
     //-----------search-----------//
     // searchQuery:string;
     
@@ -65,7 +67,7 @@ import { Geolocation } from '@ionic-native/geolocation';
     patient = [];
     searchInput:boolean = false;
     urlImg;
-
+    loading;
   constructor(
     private af: AngularFireDatabase,
     public navCtrl: NavController,
@@ -74,7 +76,8 @@ import { Geolocation } from '@ionic-native/geolocation';
     // private afStorage: AngularFireStorage,
     private alertCtrl: AlertController,
     private camera: Camera,
-    private geolocation: Geolocation)
+    private geolocation: Geolocation,
+    public loadingCtrl: LoadingController)
     {
       //  this.initializeItems();  
     }
@@ -87,9 +90,9 @@ import { Geolocation } from '@ionic-native/geolocation';
     this.itemsRef = this.af.list('/Patient/');
     // Use snapshotChanges().map() to store the key
     this.items = this.itemsRef.snapshotChanges().map(changes => {
-      console.log(changes)
+      console.log('changes',changes)
       this.patient = changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-      console.log(this.patient);
+      console.log('this.patient',this.patient);
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
     });
   }
@@ -136,29 +139,48 @@ import { Geolocation } from '@ionic-native/geolocation';
     this.patient_id = null;
     this.identification_number = null;
     this.key = null;
-
-    this.geolocation.getCurrentPosition().then((resp) => {
-     console.log("lat long:", resp.coords.latitude, " : ", resp.coords.longitude);
-     this.data.latitude = resp.coords.latitude;
-     this.data.longitude = resp.coords.longitude;
-    }).catch((error) => {
-      console.log('Error getting location', error);
-    });  
+ 
   }
 
   //บันทึกข้อมูล
   save() {
+
+    // สร้าง loading
+    this.loading = this.loadingCtrl.create({content : "Please wait..."});
+
+    // สั่ง loading ให้แสดง
+    this.loading.present();
+
+    // เช็คว่ามีการติ๊กถูกที่ปุ่ม ใช้ตำแหน่งปัจจุบัน มั้ย
+    if (this.cur_address) { 
+    // ถ้ามีติ๊กถูกที่ปุ่ม ให้ดึงค่า latitude & logitude ตำแหน่งปัจจุบันมาเก็บไว้ที่ตัวแปร this.data.latitude & this.data.longitude และ set ค่าตัวแปร this.data.address = null
+        this.geolocation.getCurrentPosition().then((resp) => {
+          this.data.latitude = resp.coords.latitude;
+          this.data.longitude = resp.coords.longitude;
+          this.data.address = null;
+        }).catch((error) => {
+          console.log('Error getting location', error);
+        }); 
+    } else {
+    // ถ้าไม่มีติ๊กถูกที่ปุ่ม ให้ set ค่าตัวแปร this.data.address และ set ค่า this.data.latitude & this.data.longitude = null
+        this.data.latitude = null;
+        this.data.longitude = null;
+    }
+
+    // เช็คว่ามีการเลือกรูปมั้ย
     if (!this.captureDataUrl) {
-      console.log('not img');
-      this.itemsRef.push(this.data);
-      this.uploadAlert();
+    // ถ้าไม่มีการเลือกรูป ให้ set ค่่าตัวแปร this.data.urlImg = null แลัวบันทึกที่ Firebase Database
+      setTimeout(() =>{ // setTimeout คือการสั่งให้รอเวลา 3 วินาที
+      // สั่ง setTimeout เพื่อรอให้ดึงค่า latitude & longitude ให้เสร็จก่อน
+        this.data.urlImg = null;
+        this.itemsRef.push(this.data);
+        this.uploadAlert();
+      },3000);
     }else {
-      console.log('img');
+    // ถ้ามีการเลือกรูป ให้ set ค่่าตัวแปร this.data.urlImg = ค่า path ที่เก็บรูปบน Firebase storage แลัวบันทึกที่ Firebase Database
       this.uploadImg().then(urlImg => {
-        console.log('this.urlImg1:',urlImg);
         if (urlImg) {
           this.data.urlImg = urlImg;
-          // console.log('this.data:',this.data);
           this.itemsRef.push(this.data);
           this.uploadAlert();
         }
@@ -181,6 +203,7 @@ import { Geolocation } from '@ionic-native/geolocation';
     this.patient_id = null;
     this.identification_number = null;
     this.key = null;
+    this.cur_address = false;
   }
 
   //ลบข้อมูลตาม key ที่เลือก
@@ -191,19 +214,17 @@ import { Geolocation } from '@ionic-native/geolocation';
 
   //แสดงข้อมูลคนไข้
   goToDetailpatient(key,patient) {
-    // console.log("patient: ",patient);
     this.navCtrl.push(DetailpatientPage,{key: key, patient: patient}); //ไปหน้า Detailpatient พร้อมส่งค่าตัวแปร key & patient
   }
 
   //-----------search-----------//   
   search(ev: any) {
-    // this.generateTopics();
     this.topics = this.patient;
     this.searchInput = true;
     let serVal = ev.target.value;
     if (serVal && serVal.trim() != '') {
         this.topics = this.patient.filter((topic) => {
-          // console.log(topic);
+          // เช็คว่าค่าที่ป้อนมา ตรงกับชื่อหรือเลขประจำตัวคนไข้มั้ย
           if ((topic.firstName.toLowerCase().indexOf(serVal.toLowerCase()) > -1) || (topic.patient_id.toLowerCase().indexOf(serVal.toLowerCase()) > -1)) {
             return topic;
           }
@@ -212,15 +233,16 @@ import { Geolocation } from '@ionic-native/geolocation';
   }
 
   getPicture(sourceType){
+    // set option ในการใช้รูป
     const cameraOptions: CameraOptions = {
       quality: 50,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       sourceType: sourceType,
-
     };
 
+    // เรียกใช้รูป
     this.camera.getPicture(cameraOptions)
      .then((captureDataUrl) => {
        this.captureDataUrl = 'data:image/jpeg;base64,' + captureDataUrl;
@@ -239,18 +261,19 @@ import { Geolocation } from '@ionic-native/geolocation';
       // อ้างอิงรูปไปเก็บที่ firebase folder images
       const imageRef = storageRef.child(`images/${filename}.jpg`);
 
-      // function imageRef.putString() ใช้ในการอัพโหลรูปไปที่ firebase
+      // function imageRef.putString() ใช้ในการอัพโหลรูปไปที่ Firebase
       imageRef.putString(this.captureDataUrl, firebase.storage.StringFormat.DATA_URL)
         .then((snapshot)=> {
-              resolve (imageRef.getDownloadURL()); // return ค่า url images
-              console.log("DATA_URL:",imageRef.getDownloadURL());
+              resolve (imageRef.getDownloadURL()); // return ค่า path ที่เก็บรูปบน Firebase storage
       });
     });
-
-    
   }
 
   uploadAlert() {
+    // สั่งปิด loading
+    this.loading.dismiss();
+
+    // สร้าง alert
     let alert = this.alertCtrl.create({
       title: 'Success',
       subTitle: 'Add Patient Success',
@@ -263,9 +286,16 @@ import { Geolocation } from '@ionic-native/geolocation';
         }
       ]
     });
+
+    // สั่งแสดง alert
     alert.present();
-    // clear the previous photo data in the variable
+
+    // clear ค่าตัวแปร this.captureDataUrl หลังจากกดบันทึก
     this.captureDataUrl = "";
-  }  
+  } 
+
+  click_cur_address () {
+    this.cur_address = !this.cur_address;
+  } 
 
 }//end export class

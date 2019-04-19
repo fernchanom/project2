@@ -82,23 +82,23 @@
         <ion-input [(ngModel)]="data.age" type="text" name="age" required></ion-input>
       </ion-item>
 
-      <ion-item>
-        <ion-row class="center show-album">
-            <!-- getPicture ส่ง 0 คือเลืกรูกจากเครื่อง ส่ง 1 คือ ถ่ายจากกล้อง -->
-            <label class="center" (click)="getPicture(0)" color="blue">Select Image</label>
-        </ion-row>
+      <div class="center">
+
+          <!-- getPicture ส่ง 0 คือเลืกรูกจากเครื่อง ส่ง 1 คือ ถ่ายจากกล้อง -->
+          <button ion-button type="button" color="primary" (click)="getPicture(0)">
+           Select Image
+          </button>
         <ion-card>
+
+          <!-- ถ้ามีการเลือกรูป แสดง tag นี้ -->
           <img [src]="captureDataUrl" *ngIf="captureDataUrl"/>
         </ion-card>
-      </ion-item>
+      </div>
 
       <!-- ***** -->
       <br>
       <ion-item>
         <tr>กรุ๊ปเลือด</tr> </ion-item>
-        <!-- <ion-input [(ngModel)]="bloodType" type="text" name="bloodType" required></ion-input> -->
-      
-
         <ion-list radio-group [(ngModel)]="data.bloodType" name="bloodType"> 
             <ion-item>
               <ion-label>A</ion-label>
@@ -146,11 +146,17 @@
             </ion-item>
         </ion-list>  
        <!-- ---****---- -->  
-     
 
-      <ion-item>
+      <ion-item class="cur_address">
+        <ion-label>ใช้ตำแหน่งปัจจุบัน</ion-label>
+        <ion-checkbox color="primary" (click)="click_cur_address()"></ion-checkbox>
+      </ion-item>
+
+      <!-- ถ้าติ๊กใช้ตำแหน่งปัจจุบัน ไม่แสดงที่อยูให้กรอก  -->
+      <!-- ถ้าไม่ติ๊กใช้ตำแหน่งปัจจุบัน แสดงที่อยู่ให้กรอก -->
+      <ion-item *ngIf="!cur_address">
         <ion-label floating>ที่อยู่</ion-label>
-        <ion-input [(ngModel)]="data.address" type="text" name="address" required></ion-input>
+        <ion-input [(ngModel)]="data.address" type="text" name="address"></ion-input>
       </ion-item>
 
       <ion-item>
@@ -158,11 +164,8 @@
         <ion-input [(ngModel)]="data.tel" type="tel" name="tel" required></ion-input>
       </ion-item>
 
-  
       <div padding>
         <button ion-button type="submit" [disabled]="!note.form.valid">เพิ่ม</button>
-        <!-- <button ion-button type="button" color="secondary" [disabled]="!note.form.valid" 
-        (click)="update(note.value)">แก้ไข</button> -->
       </div>
   
     </ion-list>
@@ -182,34 +185,26 @@
           </ion-list> -->
 <!-------------------------  end  search ---------------------------------->
 
-
+    <!-- เข้ามาหน้าคนไข้แสดง div นี้ คือไม่มีการกด search & กดแสดงฟอร์ม -->
     <div *ngIf="!searchInput && !isToogle">
-    <ion-item-sliding *ngFor="let item of items | async" (click)="select(item)">
+      <ion-item-sliding *ngFor="let item of items | async" (click)="select(item)">      
+        <ion-item (click)="goToDetailpatient(item.key,item)">
+            <h3>{{item.firstName}} {{item.lastName}}</h3>
+            <p>เลขประจำตัวคนไข้ : {{item.patient_id}}</p>
+        </ion-item>
 
-        <!-- <ion-item-options side="left">
-            <button color="bluebar" ion-button  (click)="goToDetailpatient()">
-             <ion-icon name="seeMore"></ion-icon>
-             แสดงข้อมูล
-            </button>
-         </ion-item-options> -->
-      
-      <ion-item (click)="goToDetailpatient(item.key,item)">
-          <h3>{{item.firstName}} {{item.lastName}}</h3>
-          <p>เลขประจำตัวคนไข้ : {{item.patient_id}}</p>
-      </ion-item>
-
-      <ion-item-options side="right">
-        <button ion-button color="danger" (click)="delete(item)">
-         <ion-icon name="trash"></ion-icon>
-         ลบข้อมูล
-        </button>
-     </ion-item-options>
-    </ion-item-sliding>
+        <ion-item-options side="right">
+          <button ion-button color="danger" (click)="delete(item)">
+           <ion-icon name="trash"></ion-icon>
+           ลบข้อมูล
+          </button>
+       </ion-item-options>
+      </ion-item-sliding>
     </div>
 
+    <!-- ถ้ามีการกด search & แต่ไม่กดกดแสดงฟอร์ม แสดง div นี้ -->
     <div *ngIf="searchInput && !isToogle">
       <ion-item-sliding *ngFor="let item of topics" (click)="select(item)">
-        
         <ion-item (click)="goToDetailpatient(item.key,item)">
             <h3>{{item.firstName}} {{item.lastName}}</h3>
             <p>เลขประจำตัวคนไข้ : {{item.patient_id}}</p>

@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
-import { Observable } from 'rxjs/Observable';
+// import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { DetailcheckupPage } from '../detailcheckup/detailcheckup';
 
+import firebase from 'firebase';
 import { Storage } from '@ionic/storage';
+import { Observable } from 'rxjs';
+// import { AngularFireAction } from '@angular/fire/database';
 
 // @IonicPage()
 @Component({
@@ -20,20 +23,20 @@ export class ResultPage {
   sick: string;
   nextdate_checkup: string;
   patient_id_: string;
-
+  Medical = [];
 
   isToogle: boolean = false;
 
   constructor(private af: AngularFireDatabase, public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {}
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad');
-    this.storage.get('patient_id_').then(val => {
-      this.patient_id_ = val;
-      console.log('patient_id_: ', val);
-    });
-    this.showData();
-  }
+  // ionViewDidLoad() {
+  //   console.log('ionViewDidLoad');
+  //   this.storage.get('patient_id_').then(val => {
+  //     this.patient_id_ = val;
+  //     console.log('patient_id_: ', val);
+  //   });
+  //   this.showData();
+  // }
 
   ionViewWillEnter() {
     console.log('ionViewWillEnter');
@@ -52,7 +55,7 @@ export class ResultPage {
     this.items = this.itemsRef.snapshotChanges().map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
     });
-    console.log('Data: ', this.items);
+
   }
 
   //กําหนดค่าให้กับ input และเก็บ key
@@ -91,6 +94,7 @@ export class ResultPage {
   delete(item: any) {
     this.itemsRef.remove(item.key);
     this.isToogle = false;
+    this.showData();
   }
 
   //เป็น method ที่มีไว้ซ่อนหรือแสดงฟอร์ม

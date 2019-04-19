@@ -19,13 +19,14 @@
     <ion-item no-padding>วัน/เดือน/ปีเกิด : {{data.dateOfBirth}}</ion-item>
     <ion-item no-padding>อายุ (ปี) : {{data.age}}</ion-item>
     <ion-item no-padding>กรุ๊ปเลือด : {{data.bloodType}}</ion-item>
-    <ion-card>
+    <ion-card *ngIf="data.urlImg">
         <img center [src]="data.urlImg"/>
     </ion-card>
     <ion-item no-padding>โรคประจำตัว : {{data.medicalProblems}}</ion-item>
     <ion-item no-padding>ประเภทความเสี่ยง : {{data.riskType}}</ion-item>
     <ion-item no-padding>เบอร์โทรศัพท์ : {{data.tel}}</ion-item>
-    <ion-item no-padding>ที่อยู่ : {{data.address}}</ion-item>
+    <ion-item no-padding *ngIf="data.address">ที่อยู่ : {{data.address}}</ion-item>
+    <!-- <ion-item *ng-if="!data.address" no-padding>ที่อยู่ : {{data.address}}</ion-item> -->
   </div>
 
   <div class="form">
@@ -76,10 +77,15 @@
 
         <ion-item>
           <ion-row class="center show-album">
-            <label class="center" (click)="getPicture(0)" color="blue">Select Image</label>
+
+            <!-- getPicture ส่ง 0 คือเลืกรูกจากเครื่อง ส่ง 1 คือ ถ่ายจากกล้อง -->
+            <label class="center" (click)="getPicture(0)" color="primary">Select Image</label>
           </ion-row>
           <ion-card>
-            <img [src]="data.urlImg" *ngIf="!captureDataUrl"/>
+            <!-- ถ้าคนไข้มีรุป แสดง tag นี้ -->
+            <img [src]="data.urlImg" *ngIf="data.urlImg"/>
+
+            <!-- ถ้ามีการเลือกรูป แสดง tag นี้ -->
             <img [src]="captureDataUrl" *ngIf="captureDataUrl"/>
           </ion-card>
         </ion-item>
@@ -131,9 +137,18 @@
             </ion-item>
           </ion-list>
 
-        <ion-item>
+        <ion-item class="cur_address">
+          <ion-label>ใช้ตำแหน่งปัจจุบัน</ion-label>
+
+          <!-- ถ้ามีค่า latitude & longitude ให้ checkbox ติ๊กถูกไว้ -->
+          <ion-checkbox color="primary" (click)="click_cur_address()" checked="{{checked}}"></ion-checkbox>
+        </ion-item>
+
+        <!-- ถ้าติ๊กใช้ตำแหน่งปัจจุบัน ไม่แสดงที่อยูให้กรอก  -->
+        <!-- ถ้าไม่ติ๊กใช้ตำแหน่งปัจจุบัน แสดงที่อยู่ให้กรอก -->
+        <ion-item *ngIf="!cur_address">
           <ion-label floating>ที่อยู่</ion-label>
-          <ion-input [(ngModel)]="data.address" type="text" name="address" required value="{{data.address}}"></ion-input>
+          <ion-input [(ngModel)]="data.address" type="text" name="address" value="{{data.address}}"></ion-input>
         </ion-item>
 
         <ion-item>
