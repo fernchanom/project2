@@ -4,4 +4,13 @@ page-detailpatient {
     display: block;
     color: blue;
 	}
+
+	.center{
+    text-align: center;
+    margin-top: 20px;
+	}
+
+	.cur_address .item-inner {
+    border-bottom: none !important;
+	}
 }

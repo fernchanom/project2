@@ -49,11 +49,15 @@ export class MediumPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     const requestRef = firebase.database().ref('/Patient/');
+
+    // ดึงข้อมูลคนไข้ที่มีความเสี่ยงปานกลาง
     requestRef.orderByChild('riskType')
       .equalTo('ปานกลาง')
       .once('value')
       .then(snapshot => snapshot.val())
       .then((data) => {
+        
+        // แปลงค่าจาก object to array
         this.patient = Object.keys(data).map(function(index) {
           console.log("index:", index);
           data[index].key = index

@@ -49,11 +49,15 @@ export class LowPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     const requestRef = firebase.database().ref('/Patient/');
+
+    // ดึงข้อมูลคนไข้ที่มีความเสี่ยงต่ำ
     requestRef.orderByChild('riskType')
       .equalTo('ต่ำ')
       .once('value')
       .then(snapshot => snapshot.val())
       .then((data) => {
+        
+        // แปลงค่าจาก object to array
         this.patient = Object.keys(data).map(function(index) {
           data[index].key = index
           return data[index];

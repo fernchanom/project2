@@ -55,8 +55,13 @@ export class NearPage {
     this.searchInput = true;
     let serVal = ev.target.value;
     if (serVal && serVal.trim() != '') {
+        console.log('serVal::',serVal);
       this.topics = this.patient.filter((topic) => {
-        if ((topic.address.toLowerCase().indexOf(serVal.toLowerCase()) > -1) || (topic.patient_id.toLowerCase().indexOf(serVal.toLowerCase()) > -1)) {
+        console.log('topic::',topic.address);
+        if (!topic.address) {
+          return;
+        }          
+        if ((topic.address.toLowerCase().indexOf(serVal.toLowerCase()) > -1)) {
           return topic;
         }
       })

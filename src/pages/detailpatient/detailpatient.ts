@@ -16,6 +16,7 @@ import { NotePage } from '../note/note';
 import { ResultPage } from '../result/result';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import firebase from 'firebase';
+import { LoadingController } from 'ionic-angular';
 
 
 @IonicPage()
@@ -27,20 +28,6 @@ export class DetailpatientPage {
   //geo
   latitude:number ;
   longitude:number ;
-  //note page
-  // firstName:string;
-  // lastName:string;
-  // dateOfBirth:string;
-  // age:string;
-  // bloodType:string;
-  // medicalProblems:string;
-  // riskType:string;
-  // address:string;
-  // tel:string;
-  // patient_id:string;
-  // identification_number:string;
-  // sex:string;
-  // urlImg:string;
   data = {
     firstName : null,
     lastName : null,
@@ -50,6 +37,8 @@ export class DetailpatientPage {
     bloodType : null,
     medicalProblems : null,
     riskType : null,
+    latitude : null,
+    longitude : null,
     address : null,
     tel : null,
     patient_id : null,
@@ -62,6 +51,10 @@ export class DetailpatientPage {
   key:string;
   isToogle:boolean = false;
   captureDataUrl: string = null;
+  destination:any = null;
+  loading:any;
+  checked:any = false;
+  cur_address:boolean = false;
 
 
   constructor(private af: AngularFireDatabase,
@@ -72,7 +65,8 @@ export class DetailpatientPage {
     private platform: Platform,
     public storage: Storage,
     public alertCtrl: AlertController,
-    private camera: Camera) {
+    private camera: Camera,
+    public loadingCtrl: LoadingController) {
   }
 
   ionViewWillEnter(){
@@ -83,19 +77,14 @@ export class DetailpatientPage {
     this.key = this.navParams.get('key'); //รับค่าตัวแปร key ที่ส่งมาจากหน้า note
     console.log("key",this.key);
     console.log("patientpatient",this.patient.firstName);
-    // this.firstName = this.patient.firstName;
-    // this.lastName = this.patient.lastName;
-    // this.dateOfBirth = this.patient.dateOfBirth;
-    // this.age = this.patient.age;
-    // this.bloodType = this.patient.bloodType;
-    // this.medicalProblems = this.patient.medicalProblems;
-    // this.riskType = this.patient.riskType;
-    // this.address = this.patient.address;
-    // this.tel = this.patient.tel;
-    // this.patient_id = this.patient.patient_id;
-    // this.identification_number = this.patient.identification_number;
-    // this.sex = this.patient.sex;
-    // this.urlImg = this.patient.urlImg;
+
+    // เช็ค่า latitude & longitude ของคนไข้ ถ้ามีเก็บให้ค่า this.checked = true เพื่อให้ checkbox ติ๊กถูกไว้ และไม่แสดง textbox ของที่อยู่ 
+    if (this.patient.latitude && this.patient.longitude) {
+      this.checked = true;
+      this.cur_address = true;
+    }
+
+    // set ค่าให้ตัวแปร this.data
     this.data = {
       firstName             : this.patient.firstName,
       lastName              : this.patient.lastName,
@@ -105,6 +94,8 @@ export class DetailpatientPage {
       bloodType             : this.patient.bloodType,
       medicalProblems       : this.patient.medicalProblems,
       riskType              : this.patient.riskType,
+      latitude              : this.patient.latitude,
+      longitude             : this.patient.longitude,
       address               : this.patient.address,
       tel                   : this.patient.tel,
       patient_id            : this.patient.patient_id,
@@ -124,14 +115,22 @@ export class DetailpatientPage {
 
 
 
-  //---------------------   google map   ------------------------//
+  //---------------------   navigate   ------------------------//
   navigateLocation(){
     let options: LaunchNavigatorOptions = {
       start:[this.latitude,this.longitude],
       app: this.launchNavigator.APP.GOOGLE_MAPS
     };
-    this.launchNavigator.navigate(this.data.address+', ON', options)
-    // this.launchNavigator.navigate('Robinson Sriracha, ON', options)
+
+    if (this.patient.latitude && this.patient.longitude) {
+    // ถ้ามีค่า latitude & longitude ให้เอาค่า latitude & longitude ไปใช้นำทาง
+      this.destination = [this.patient.latitude, this.patient.longitude];
+    } else {
+    // ถ้าไม่มีค่า latitude & longitude ให้เอาค่า adddress ไปใช้นำทาง
+      this.destination = this.patient.address;
+    }
+      
+    this.launchNavigator.navigate(this.destination, options)
     .then(success =>{
       console.log(success);
     },error=>{
@@ -139,7 +138,7 @@ export class DetailpatientPage {
     })
 
   }
-  //--------------------- end  google map   ------------------------//
+  //--------------------- end  navigate   ------------------------//
 
   async goToResult() {
     await this.storage.set('patient_id_',this.key).then(val => {
@@ -154,14 +153,39 @@ export class DetailpatientPage {
 
   //อัปเดตข้อมูลตาม key ที่ส่งมา
   update() {
-    // console.log("note:", note);
-    // console.log("key:", this.key);
+
+    // เช็คว่ามีการติ๊กถูกที่ปุ่ม ใช้ตำแหน่งปัจจุบัน มั้ย
+    if (this.cur_address) { 
+    // ถ้ามีติ๊กถูกที่ปุ่ม ให้ดึงค่า latitude & logitude ตำแหน่งปัจจุบันมาเก็บไว้ที่ตัวแปร this.data.latitude & this.data.longitude และ set ค่าตัวแปร this.data.address = null
+        this.geolocation.getCurrentPosition().then((resp) => {
+          this.data.latitude = resp.coords.latitude;
+          this.data.longitude = resp.coords.longitude;
+          this.data.address = null;
+        }).catch((error) => {
+          console.log('Error getting location', error);
+        }); 
+    } else {
+    // ถ้าไม่มีติ๊กถูกที่ปุ่ม ให้ set ค่าตัวแปร this.data.address และ set ค่า this.data.latitude & this.data.longitude = null
+        this.data.latitude = null;
+        this.data.longitude = null;
+    }
+
+    // สร้าง loading
+    this.loading = this.loadingCtrl.create({content : "Please wait..."});
+
+    // สั่ง loading ให้แสดง
+    this.loading.present();
+
+    // เช็คว่ามีการเลือกรูปมั้ย
     if (!this.captureDataUrl) {
-        this.af.list('/Patient').update(this.key, this.data);
-        this.uploadAlert();
+    // ถ้าไม่มีการเลือกรูป ให้ update ค่าที่ Firebase Database
+        setTimeout(() =>{ // setTimeout คือการสั่งให้รอเวลา 3 วินาที
+          this.af.list('/Patient').update(this.key, this.data);
+          this.uploadAlert();
+        },3000);
     }else{
+    // ถ้ามีการเลือกรูป ให้ set ค่่าตัวแปร this.data.urlImg = ค่า path ที่เก็บรูปบน Firebase storage แล้วบันทึกค่าที่ Firebase Database
       this.uploadImg().then(urlImg => {
-      console.log("urlImg:", urlImg);
         if (this.key && urlImg) {
           this.data.urlImg = urlImg;
           this.af.list('/Patient').update(this.key, this.data);
@@ -172,6 +196,7 @@ export class DetailpatientPage {
   }
 
   getPicture(sourceType){
+    // set option ในการใช้รูป
     const cameraOptions: CameraOptions = {
       quality: 50,
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -180,6 +205,7 @@ export class DetailpatientPage {
       sourceType: sourceType
     };
 
+    // เรียกใช้รูป
     this.camera.getPicture(cameraOptions)
      .then((captureDataUrl) => {
        this.captureDataUrl = 'data:image/jpeg;base64,' + captureDataUrl;
@@ -192,19 +218,25 @@ export class DetailpatientPage {
     return new Promise<any>(resolve => {
       let storageRef = firebase.storage().ref();
 
+      // สร้างชื่อรูปเป็นวันที่
       const filename = Math.floor(Date.now() / 1000);
 
+      // อ้างอิงรูปไปเก็บที่ firebase folder images
       const imageRef = storageRef.child(`${filename}.jpg`);
 
+      // function imageRef.putString() ใช้ในการอัพโหลรูปไปที่ Firebase
       imageRef.putString(this.captureDataUrl, firebase.storage.StringFormat.DATA_URL)
         .then((snapshot)=> {
               resolve (imageRef.getDownloadURL());
-          console.log("DATA_URL:",imageRef.getDownloadURL());
       });
     });
   }
 
   uploadAlert() {
+    // สั่งปิด loading
+    this.loading.dismiss();
+
+    // สร้าง alert
     let alert = this.alertCtrl.create({
       title: 'Update',
       subTitle: 'Update Patient Success',
@@ -217,10 +249,17 @@ export class DetailpatientPage {
         }
       ]
     });
+
+    // สั่งแสดง alert
     alert.present();
-    // clear the previous photo data in the variable
+
+    // clear ค่าตัวแปร this.captureDataUrl หลังจากกดอัพเดท
     this.captureDataUrl = "";
   }
+
+  click_cur_address () {
+    this.cur_address = !this.cur_address;
+  } 
 
 }
 

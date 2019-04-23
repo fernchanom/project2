@@ -37,15 +37,7 @@ export class TypeofpatientPage {
 
   goToHight() {
     this.navCtrl.push(HightPage);
-    // this.afd.list('Patient/').valueChanges().subscribe{
-    //   data => {
-    //     console.log(data)
-    //     this.items = data
-    //   }
-    // }
-
   }
-
 
   goToMedium() {
     this.navCtrl.push(MediumPage);
