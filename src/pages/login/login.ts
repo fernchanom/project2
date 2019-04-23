@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 
 import { Storage } from '@ionic/storage';
 
@@ -9,6 +9,8 @@ import 'rxjs/add/operator/map';
 import firebase from 'firebase';
 import { NotePage } from '../note/note';
 import { AlertController } from 'ionic-angular';
+
+import {  MenuController } from 'ionic-angular';
 
 
 /**
@@ -29,7 +31,7 @@ export class LoginPage {
   username: String;
   password: String;
 
-  constructor(private af: AngularFireDatabase, public navCtrl: NavController, public navParams: NavParams, public storage: Storage, private alertCtrl: AlertController) {
+  constructor(private af: AngularFireDatabase, public navCtrl: NavController, public navParams: NavParams, public storage: Storage, private alertCtrl: AlertController, public menuCtrl: MenuController, private viewCtrl: ViewController) {
   }
 
   public myPerson = [];
@@ -44,6 +46,12 @@ export class LoginPage {
     //   this.myPerson = d;
     //   console.log('test2: ', this.myPerson);
     // });
+  }
+
+  ionViewWillEnter() {
+    this.menuCtrl.enable(false);
+    this.viewCtrl.showBackButton(false);
+    console.log('menu');
   }
 
   showData() {
@@ -80,6 +88,7 @@ export class LoginPage {
         this.storage.set('user', this.myPerson[key]);
         this.navCtrl.push(NotePage);
         userPass=true;
+        this.menuCtrl.enable(true);
       }
     });
 

@@ -46,6 +46,7 @@ export class MyApp {
     public storage: Storage) {
     this.initializeApp();
 
+
     // ตรวจสอบการ login
     this.storage.get('user_id').then((val) => {
 
@@ -53,6 +54,8 @@ export class MyApp {
       if(val) { // login แล้ว
         this.rootPage = NotePage;
       }else{ // ยังไม่ได้ login
+        console.log('no login');
+        // this.nav.setRoot(LoginPage);
         this.rootPage = LoginPage;
       }
     });
@@ -62,7 +65,7 @@ export class MyApp {
     this.pages = [
      // { title: 'หน้าแรก', component: HomePage, icon: 'home'},
      // { title: 'List', component: ListPage },
-      { title: 'เข้าสู่ระบบ', component: LoginPage, icon: 'log-in'},
+      // { title: 'เข้าสู่ระบบ', component: LoginPage, icon: 'log-in'},
       { title: 'คนไข้', component: NotePage, icon: 'man'},
       //{ title: 'คนไข้2', component: PatientPage, icon: 'man'},
       //{ title: 'ค้นหาคนไข้', component: SearchpatientPage, icon: 'search'},
@@ -94,6 +97,9 @@ export class MyApp {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
+
+    // // Set page ที่ไม่ต้องการให้มีเมนูด้านซ้าย
+    // this.nav.setRoot(LoginPage);
   }
 
 

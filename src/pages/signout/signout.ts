@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+// import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { Nav, Platform }        from 'ionic-angular';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
@@ -11,6 +13,7 @@ import { Storage } from '@ionic/storage';
   templateUrl: 'signout.html',
 })
 export class SignoutPage {
+  @ViewChild(Nav) nav: Nav;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -41,7 +44,6 @@ export class SignoutPage {
             this.storage.set('user', null);
             this.storage.set('user_id', null);
             this.navCtrl.push(LoginPage);
-
           }
         }
       ]
