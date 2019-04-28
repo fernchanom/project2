@@ -3,20 +3,23 @@
 		<button ion-button menuToggle>
 			<ion-icon name="menu"></ion-icon>
 		</button>
-		<ion-title>คนไข้ที่ต้องเข้าการตรวจวันที่ {{date}}</ion-title>
+		<ion-title>คนไข้ที่ต้องเข้าการตรวจวันที่ <br> {{date | date: 'dd/MM/yyyy'}}</ion-title>
 	</ion-navbar>
 </ion-header>
 <ion-content padding>
-	<ion-item-sliding *ngFor="let item of patient" (click)="select(item)">
-		<ion-item (click)="goToDetailpatient(item.key,item)">
-			<h3>{{item.firstName}} {{item.lastName}}</h3>
-			<p>เลขประจำตัวคนไข้ : {{item.patient_id}}</p>
-		</ion-item>
-		<!-- <ion-item-options side="right">
-      <button ion-button color="danger" (click)="delete(item)">
-       <ion-icon name="trash"></ion-icon>
-       ลบข้อมูล
-      </button>
-   </ion-item-options> -->
-	</ion-item-sliding>
+	<label *ngIf="patient.length == 0">No Data</label>
+	<div *ngIf="patient.length > 0">
+		<ion-item-sliding *ngFor="let item of patient" (click)="select(item)">
+			<ion-item (click)="goToDetailpatient(item.key,item)">
+				<h3>{{item.firstName}} {{item.lastName}}</h3>
+				<p>เลขประจำตัวคนไข้ : {{item.patient_id}}</p>
+			</ion-item>
+			<!-- <ion-item-options side="right">
+	      <button ion-button color="danger" (click)="delete(item)">
+	       <ion-icon name="trash"></ion-icon>
+	       ลบข้อมูล
+	      </button>
+	   </ion-item-options> -->
+		</ion-item-sliding>
+	</div>
 </ion-content>

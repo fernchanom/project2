@@ -82,6 +82,8 @@ export class DetailTodayPage {
                 }).filter(arr=>arr);
                 console.log("patient:", this.patient);
               });
+        } else {
+          this.patient = [];
         }
 
       });

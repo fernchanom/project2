@@ -83,6 +83,8 @@ export class DetailNextdayPage {
                 }).filter(arr=>arr);
                 console.log("patient:", this.patient);
               });
+        } else {
+          this.patient = [];
         }
 
       });
