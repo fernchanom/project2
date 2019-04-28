@@ -60,7 +60,7 @@ import { LoadingController } from 'ionic-angular';
     cur_address:boolean = false;
     //-----------search-----------//
     // searchQuery:string;
-    
+
 
     isToogle:boolean = false;
     topics: string[];
@@ -79,7 +79,7 @@ import { LoadingController } from 'ionic-angular';
     private geolocation: Geolocation,
     public loadingCtrl: LoadingController)
     {
-      //  this.initializeItems();  
+      //  this.initializeItems();
     }
   ionViewWillEnter() {
     this.showData();
@@ -97,7 +97,7 @@ import { LoadingController } from 'ionic-angular';
     });
   }
 
-  //กําหนดค่าให้กับ input และเก็บ key 
+  //กําหนดค่าให้กับ input และเก็บ key
   select(item) {
     //console.log(item);
     this.firstName = item.firstName;
@@ -139,7 +139,7 @@ import { LoadingController } from 'ionic-angular';
     this.patient_id = null;
     this.identification_number = null;
     this.key = null;
- 
+
   }
 
   //บันทึกข้อมูล
@@ -152,7 +152,7 @@ import { LoadingController } from 'ionic-angular';
     this.loading.present();
 
     // เช็คว่ามีการติ๊กถูกที่ปุ่ม ใช้ตำแหน่งปัจจุบัน มั้ย
-    if (this.cur_address) { 
+    if (this.cur_address) {
     // ถ้ามีติ๊กถูกที่ปุ่ม ให้ดึงค่า latitude & logitude ตำแหน่งปัจจุบันมาเก็บไว้ที่ตัวแปร this.data.latitude & this.data.longitude และ set ค่าตัวแปร this.data.address = null
         this.geolocation.getCurrentPosition().then((resp) => {
           this.data.latitude = resp.coords.latitude;
@@ -160,7 +160,7 @@ import { LoadingController } from 'ionic-angular';
           this.data.address = null;
         }).catch((error) => {
           console.log('Error getting location', error);
-        }); 
+        });
     } else {
     // ถ้าไม่มีติ๊กถูกที่ปุ่ม ให้ set ค่าตัวแปร this.data.address และ set ค่า this.data.latitude & this.data.longitude = null
         this.data.latitude = null;
@@ -188,7 +188,7 @@ import { LoadingController } from 'ionic-angular';
     }
 
     this.isToogle = false;
-    
+
     // clear input
     this.firstName = null;
     this.lastName = null;
@@ -217,9 +217,9 @@ import { LoadingController } from 'ionic-angular';
     this.navCtrl.push(DetailpatientPage,{key: key, patient: patient}); //ไปหน้า Detailpatient พร้อมส่งค่าตัวแปร key & patient
   }
 
-  //-----------search-----------//   
+  //-----------search-----------//
   search(ev: any) {
-    this.topics = this.patient;
+    // this.topics = this.patient;
     this.searchInput = true;
     let serVal = ev.target.value;
     if (serVal && serVal.trim() != '') {
@@ -249,7 +249,7 @@ import { LoadingController } from 'ionic-angular';
     }, (err) => {
         console.log(err);
     });
-  } 
+  }
 
   uploadImg() {
     return new Promise<any>(resolve => {
@@ -292,10 +292,10 @@ import { LoadingController } from 'ionic-angular';
 
     // clear ค่าตัวแปร this.captureDataUrl หลังจากกดบันทึก
     this.captureDataUrl = "";
-  } 
+  }
 
   click_cur_address () {
     this.cur_address = !this.cur_address;
-  } 
+  }
 
 }//end export class
