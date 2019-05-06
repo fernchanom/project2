@@ -69,14 +69,16 @@ export class NearbyPage {
   nearbyPlace(){
     this.loadMap();
     this.markers = [];
+    console.log('map: ', this.map);
+    console.log('latLing: ', this.latLng);
     let service = new google.maps.places.PlacesService(this.map);
     service.nearbySearch({
-              location: this.latLng,
-              radius: this.isKM,
-              types: [this.isType]
-            }, (results, status) => {
-                this.callback(results, status);
-            });
+      location: this.latLng,
+      radius: this.isKM,
+      types: [this.isType]
+    }, (results, status) => {
+        this.callback(results, status);
+    });
   }
 
   callback(results, status) {
