@@ -3,6 +3,7 @@ import { ErrorHandler, NgModule }                   from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { Geolocation }                              from '@ionic-native/geolocation';
 import { LaunchNavigator }                          from '@ionic-native/launch-navigator';
+// import { googlemaps }                               from 'googlemaps';
 
 //import { ListPage }                               from '../pages/list/list';
 //import { MapPage }                                from '../pages/map/map';
@@ -30,6 +31,7 @@ import { UserCreatePage }                           from '../pages/userCreate/us
 import { DetailNextdayPage }                        from '../pages/detailnextday/detailnextday';
 import { DetailTodayPage }                          from '../pages/detailtoday/detailtoday';
 import { NearPage }                                 from '../pages/near/near';
+import { NearbyPage }                                 from '../pages/nearby/nearby';
 import { Camera }                                   from '@ionic-native/camera';
 import { IonicStorageModule }                       from '@ionic/storage';
 
@@ -50,6 +52,8 @@ export const config = {
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { LocationsProvider } from '../providers/locations/locations';
+import { Http } from '@angular/http';
 
 @NgModule({
   declarations: [
@@ -79,6 +83,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     DetailNextdayPage,
     DetailTodayPage,
     NearPage,
+    NearbyPage,
   ],
   imports: [
     BrowserModule,
@@ -115,6 +120,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     DetailNextdayPage,
     DetailTodayPage,
     NearPage,
+    NearbyPage,
   ],
   providers: [
     StatusBar,
@@ -123,7 +129,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     Geolocation,
     LaunchNavigator,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    Camera
+    Camera,
+    LocationsProvider,
+    Http,
   ]
 })
 export class AppModule {}

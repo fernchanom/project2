@@ -24,6 +24,7 @@ import { HightPage }            from '../pages/hight/hight';
 import { SettingPage }          from '../pages/setting/setting';
 import { UserCreatePage }       from '../pages/userCreate/userCreate';
 import { NearPage }             from '../pages/near/near';
+import { NearbyPage }             from '../pages/nearby/nearby';
 
 
 
@@ -73,6 +74,7 @@ export class MyApp {
       { title: 'ผลการตรวจประจำวัน', component: TodayPage, icon: 'paper'},
       { title: 'การตรวจครั้งถัดไป', component: NextdayPage, icon: 'clipboard'},
      { title: 'คนไข้ใกล้เคียง', component: NearPage, icon: 'navigate'},
+     { title: 'คนไข้ใกล้เคียง2', component: NearbyPage, icon: 'navigate'},
      // { title: 'แผนที่', component: MapPage, icon: 'navigate'},
 //      { title: 'แผนที่2', component: GeolocationPage, icon: 'navigate'},
       { title: 'ตั้งค่าบัญชีผู้ใช้', component: SettingPage, icon: 'settings'},
