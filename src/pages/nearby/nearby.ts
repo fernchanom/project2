@@ -41,7 +41,6 @@ export class NearbyPage {
     private af: AngularFireDatabase,
     private ngZone: NgZone,
     private geolocation : Geolocation) {
-    this.loadMap();
   }
 
   loadMap(){
@@ -67,18 +66,19 @@ export class NearbyPage {
       var infowindow = new google.maps.InfoWindow();
 
       var marker, i;
+      var locations = this.locations;
 
-      for (i = 0; i < this.locations.length; i++) {
+      for (i = 0; i < locations.length; i++) {
         marker = new google.maps.Marker({
-          position: new google.maps.LatLng(this.locations[i][1], this.locations[i][2]),
+          position: new google.maps.LatLng(locations[i][1], locations[i][2]),
           map: this.map
         });
 
         // google.maps.event.addListener(marker, 'click', (function(marker, i) {
         google.maps.event.addListener(marker, 'click', ((marker, i) => {
           return function() {
-            console.log('click map');
-            infowindow.setContent(this.locations[i][0]);
+            console.log('click map', locations);
+            infowindow.setContent(locations[i][0]);
             infowindow.open(this.map, marker);
             // this.navCtrl.push(DetailpatientPage); //ไปหน้า Detailpatient พร้อมส่งค่าตัวแปร key & patient
           }
@@ -94,6 +94,8 @@ export class NearbyPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad NearPage');
     this.showData();
+    this.loadMap();
+
   }
 
   ionViewWillEnter() {
@@ -101,13 +103,6 @@ export class NearbyPage {
 
   //แสดงข้อมูลทั้งหมดจากฐานข้อมูล
   showData() {
-    // this.itemsRef = this.af.list('/Patient/');
-    // // Use snapshotChanges().map() to store the key
-    // this.items = await this.itemsRef.snapshotChanges().map(changes => {
-    //   console.log('changes',changes)
-    //   this.patient = changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    //   return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    // });
 
     const itemsRef: firebase.database.Reference = firebase.database().ref("/Patient");
     itemsRef.on('value', personSnapshot => {
@@ -115,9 +110,8 @@ export class NearbyPage {
     });
 
     Object.keys(this.patient).forEach(key => {
-      this.locations.push([this.patient[key].firstName + this.patient[key].lastName, this.patient[key].latitude, this.patient[key].longitude]);
+      this.locations.push([this.patient[key].firstName + ' ' + this.patient[key].lastName, this.patient[key].latitude, this.patient[key].longitude]);
     });
-    console.log('this.patient',this.locations);
   }
 
   //แสดงข้อมูลคนไข้
