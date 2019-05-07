@@ -3,10 +3,13 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import { DetailpatientPage } from '../detailpatient/detailpatient';
+import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
+import firebase from 'firebase';
 
 import { NgZone, ElementRef, ViewChild } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { Geolocation ,GeolocationOptions ,Geoposition ,PositionError } from '@ionic-native/geolocation';
+
 
 
 declare var google;
@@ -18,7 +21,6 @@ declare var google;
 })
 export class NearbyPage {
   @ViewChild('map') mapElement: ElementRef;
-
   map:any;
   latLng:any;
   markers:any;
@@ -31,6 +33,7 @@ export class NearbyPage {
   topics: string[];
   searchInput:boolean = false;
   patient = [];
+  locations = [];
 
   constructor(
     public navCtrl: NavController,
@@ -55,56 +58,37 @@ export class NearbyPage {
         mapTypeId: google.maps.MapTypeId.ROADMAP
       }
 
+
+      console.log('elemant: ', this.mapElement.nativeElement);
       this.map = new google.maps.Map(this.mapElement.nativeElement, this.mapOptions);
+
+      console.log('location', this.locations);
+
+      var infowindow = new google.maps.InfoWindow();
+
+      var marker, i;
+
+      for (i = 0; i < this.locations.length; i++) {
+        marker = new google.maps.Marker({
+          position: new google.maps.LatLng(this.locations[i][1], this.locations[i][2]),
+          map: this.map
+        });
+
+        // google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        google.maps.event.addListener(marker, 'click', ((marker, i) => {
+          return function() {
+            console.log('click map');
+            infowindow.setContent(this.locations[i][0]);
+            infowindow.open(this.map, marker);
+            // this.navCtrl.push(DetailpatientPage); //ไปหน้า Detailpatient พร้อมส่งค่าตัวแปร key & patient
+          }
+        })(marker, i));
+      }
 
     }, (err) => {
       alert('err '+err);
     });
 
-  }
-
-
- /*--------------------Find Nearby Place------------------------*/
-
-  nearbyPlace(){
-    this.loadMap();
-    this.markers = [];
-    console.log('map: ', this.map);
-    console.log('latLing: ', this.latLng);
-    let service = new google.maps.places.PlacesService(this.map);
-    service.nearbySearch({
-      location: this.latLng,
-      radius: this.isKM,
-      types: [this.isType]
-    }, (results, status) => {
-        this.callback(results, status);
-    });
-  }
-
-  callback(results, status) {
-    if (status === google.maps.places.PlacesServiceStatus.OK) {
-      for (var i = 0; i < results.length; i++) {
-        this.createMarker(results[i]);
-      }
-    }
-  }
-
-  createMarker(place){
-    var placeLoc = place;
-    console.log('placeLoc',placeLoc);
-    this.markers = new google.maps.Marker({
-        map: this.map,
-        position: place.geometry.location
-    });
-
-    let infowindow = new google.maps.InfoWindow();
-
-    google.maps.event.addListener(this.markers, 'click', () => {
-      this.ngZone.run(() => {
-        infowindow.setContent(place.name);
-        infowindow.open(this.map, this.markers);
-      });
-    });
   }
 
   ionViewDidLoad() {
@@ -113,18 +97,27 @@ export class NearbyPage {
   }
 
   ionViewWillEnter() {
-    console.log('ionViewWillEnter NearPage');
-    this.showData();
   }
 
   //แสดงข้อมูลทั้งหมดจากฐานข้อมูล
   showData() {
-    this.itemsRef = this.af.list('/Patient/');
-    // Use snapshotChanges().map() to store the key
-    this.items = this.itemsRef.snapshotChanges().map(changes => {
-      this.patient = changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+    // this.itemsRef = this.af.list('/Patient/');
+    // // Use snapshotChanges().map() to store the key
+    // this.items = await this.itemsRef.snapshotChanges().map(changes => {
+    //   console.log('changes',changes)
+    //   this.patient = changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+    //   return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+    // });
+
+    const itemsRef: firebase.database.Reference = firebase.database().ref("/Patient");
+    itemsRef.on('value', personSnapshot => {
+      this.patient = personSnapshot.val();
     });
+
+    Object.keys(this.patient).forEach(key => {
+      this.locations.push([this.patient[key].firstName + this.patient[key].lastName, this.patient[key].latitude, this.patient[key].longitude]);
+    });
+    console.log('this.patient',this.locations);
   }
 
   //แสดงข้อมูลคนไข้
